@@ -33,14 +33,14 @@ module.exports = function(container){
 
         createAccount: function(account, callback){
 
-            const query = `INSERT INTO account (username, password) VALUES (?, ?)` 
-            const values = [account.username, account.password]
+            const query = `INSERT INTO customerAccounts (fullName, email, adress, postalCode, password) VALUES (?, ?, ?, ?, ?)` 
+            const values = [account.fullName, account.email, account.adress, account.postalCode, account.password]
 
             db.query(query, values, function(error, results){
                 if(error){
-                    container.createAccount.callback(['databaseError'], null)
+                    container.createAccount.callback(error, null)
                 }else{
-                    container.createAccount.callback([], result.insertID)
+                    container.createAccount.callback(null, results.insertID)
                 }
             })
         }

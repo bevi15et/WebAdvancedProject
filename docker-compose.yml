@@ -6,7 +6,7 @@ services:
       - "8080:8080"
       - "9229:9229"
     volumes:
-      - "./web-application/src:/web-applocation/src"
+      - "./web-application/src:/web-application/src"
     depends_on:
       - database
   database:

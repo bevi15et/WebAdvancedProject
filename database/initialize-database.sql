@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS customerAccounts(
     fullName VARCHAR(50),
     email VARCHAR(50),
     adress VARCHAR (100),
+    postalCode varchar(50),
     password VARCHAR(25)
 );
 
