@@ -1,0 +1,59 @@
+<<<<<<< HEAD
+=======
+<div class="container1">
+    {{#if isLoggedIn}}<!-- IF LOGGED IN -->
+        <div class="selection box">
+            <p>Welcome (username)</p><br>
+            <p>namn: </p>
+            <p>email: </p>
+            <p>adress: </p>
+
+            <form action="changePassword">
+                new pass: <input type="text" name="changePassword"><br>
+            repeat new pass:  <input type="text" name="repeatChangePassword"><br>
+            <input type="button" value="change password" name="changePasswordButton">
+            </form>
+        
+            <div>
+                <p>old orders:</p>
+                <ul>
+                    {{#each orders}}
+                        <li>Order: {{orderId}}
+                            {{#each droducts}}
+                                <li>Item: {{productId}}</li>
+                            {{/each}}
+                        </li>
+                    {{/each}}
+                </ul>
+            </div>
+        </div>
+    
+    {{else}} <!-- IF NOT LOGGED IN -->
+        <div class="section box">
+            <form action="login" method="get">
+                <p>login</p><br>
+                name<input type="text" name="username"><br>
+                pass<input type="text" name="password"><br>
+                <input type="button" value="login" name="loginButton">
+                <input type="button" value="forgot password" name="forgotPasswordButton">
+            </form>
+        </div>
+
+        <div class="section box">
+            <form action="create_account" method="post">
+                <p>Create new account</p><br>
+                email<input type="text" name="newEmail"><br>   
+                first name<input type="text" name="newUserFirstName"><br>
+                last name<input type="text" name="newUserLastName"><br>
+                password<input type="text" name="newPassword"><br>
+                repeat password<input type="text" name="newRepeatPassword"><br>
+                street adress<input type="text" name="newAdress"><br>
+                postal code<input type="text" name="newPostalCode"><br>
+                city<input type="text" name="newCity"><br>
+                <input type="button" value="create" name="createNewAccountButton">
+            </form>
+        </div>
+
+    {{/if}}
+</div>
+>>>>>>> 47675ae88b956d73b10c6c658553cd72ad7e7c47

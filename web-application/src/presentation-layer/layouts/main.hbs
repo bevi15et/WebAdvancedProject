@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Ambigous Shop</title>
+        <link rel="stylesheet" type="text/css" href="/css/layout.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cookie">
+    </head>
+    <body>
+
+
+        <!-- NAV -->
+        <div class="navbar">
+            <div class="navbar-brand">
+                <span class="navbar-burger burger" data-target="toggleBurger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </span>
+            </div>
+
+
+            <div id="toggleBurger" class="navbar-menu">
+                <div class="navbar-start">
+                    <a href="/" class="navbar-item is-size-5">Home</a>
+                    <a href="/Selection" class="navbar-item is-size-5">Selection</a>
+                    <a href="/Checkout" class="navbar-item is-size-5">Checkout</a>
+                    <a href="/Profile" class="navbar-item is-size-5">Profile</a>
+                </div>
+            </div>
+
+        </div>
+
+        <script type="text/javascript">
+            (function() {
+                var burger = document.querySelector('.burger');
+                var nav = document.querySelector('#'+burger.dataset.target);
+                burger.addEventListener('click', function(){
+                    burger.classList.toggle('is-active');
+                    nav.classList.toggle('is-active');
+                });
+            })();
+    </script>
+
+    <!-- Body -->
+
+        {{{body}}}
+    
+
+    <!-- footer -->
+
+    <footer>
+        
+    </footer>
+    </body>
+</html>

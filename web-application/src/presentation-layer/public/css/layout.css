@@ -1,0 +1,93 @@
+
+
+
+/* NAVBAR */
+.container0 h1.title.has-text-centered   {
+    text-align: center;
+    font-size: 6rem;
+    font-family: "Cookie";
+    background: #fff;
+    padding: 20px;
+    margin: 15px;
+    z-index: 1;
+    opacity: 0.75 ;
+}
+
+a.navbar-item  {
+    color: white;
+    padding: 0px 30px;
+}
+a.navbar-item:hover {
+    background-color: transparent !important;
+    color: red !important;
+}
+
+div.navbar{
+    background-color: black;
+    padding: 20px 30px;
+}
+
+div.navbar-menu{
+    padding: 10px;
+    background-color: black;
+}
+
+span.navbar-burger{
+    background-color: red;
+    
+}
+#toggleBurger{
+    padding: 0px;
+}
+
+
+
+/* BODY */
+.container0{
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.container1{
+    margin-left: 5rem;
+    margin-right: 5rem;
+    height: 100%;
+    background-color: grey;
+    align-content: center;
+    justify-content: center;
+}
+
+.buttons{
+    align-items: right;
+    height: 2rem;
+}
+
+.container1 section{
+    margin: 3rem;
+}
+
+
+
+
+.image{
+    margin: 1rem;
+}
+
+.video-container{
+    position: absolute;
+    top: 0;
+    left: 0; 
+    width: 100%;
+}
+
+
+
+
+
+
+/* FOOTER */
