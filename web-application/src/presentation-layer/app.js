@@ -93,6 +93,14 @@ app.post('/login',function(res,req){
     req.session.loggedInAccount = account
 })
 
+app.get('/addProduct', function(req, res){
+    res.render("addProduct.hbs")
+})
+
+app.get('/productDetails', function(req, res){
+    res.render("productDetails.hbs")
+})
+
 app.listen(8080, function(){
     console.log("Web app listening on port 8080")
 })
