@@ -26,3 +26,8 @@ CREATE TABLE IF NOT EXISTS orders(
     CONSTRAINT FOREIGN KEY(productId) REFERENCES products(productId)
     
 );
+
+CREATE TABLE IF NOT EXISTS test(
+    test1 text,
+    test2 text
+)
