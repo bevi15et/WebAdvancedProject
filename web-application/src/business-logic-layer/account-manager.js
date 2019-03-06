@@ -1,56 +1,30 @@
-const accountRepository = require('../data-acess-layer/account-repository')
-const accountValidator = require('./account-validator')
 
-module.exports = function(container){
+
+module.exports = function({accountRepository, accountValidator}){
     return{
-<<<<<<< HEAD
         
-        createAccount: function(account, callback){
+        createAccount: function(email, fullName, password, repeatPassword, adress, postalCode, callback){
+            const errors = []
 
-            container.accountRepository.createAccount(callback)
+            const errors = accountValidator.getErrorsNewAccount(email, fullName, password, repeatPassword, adress, postalCode, callback)
+            if(errors.length > 0){
+                callback(errors, null)
+            }
+            const account = {email: email, fullName: fullName, password: password, 
+            adress: adress, postalCode: postalCode}
             
-            const errors = accountValidator.getErrorsNewAccount(account)
-            if(errors.length > 0){
-                callback(errors, null)
-                return
-            }
-            accountRepository.createAccount(account, callback)
+            accountRepository.createAccount(account, function(error, results){
+                callback(error,results)
+            })
         },
         
-        getAccountByUsername: function(username, callback){
-            container.accountRepository.getAccountByUsername(username, callback)
-        },
-
-
-
-
-    }
-}
-
-
-
-
-=======
-
-        createAccount: function(account, callback){
-    
-            const errors = accountValidator.getErrorsNewAccount(account)
-        
-            if(errors.length > 0){
-                callback(errors, null)
-                retrurn
-            }
-        
-            accountRepository.createAccount(account, callback)
-        },
-                
         getAccountByUsername: function(username, callback){
             accountRepository.getAccountByUsername(username, callback)
-        }
-        
+        },
 
     }
 }
 
 
->>>>>>> 47675ae88b956d73b10c6c658553cd72ad7e7c47
+
+

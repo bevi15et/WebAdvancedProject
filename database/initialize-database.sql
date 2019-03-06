@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS customerAccounts(
     fullName VARCHAR(50),
     email VARCHAR(50),
     adress VARCHAR (100),
+    postalCode varchar(50),
     password VARCHAR(25)
 );
 
@@ -10,6 +11,7 @@ CREATE TABLE IF NOT EXISTS customerAccounts(
 CREATE TABLE IF NOT EXISTS products(
     productId INTEGER PRIMARY KEY AUTO_INCREMENT, 
     productImage BLOB, 
+    price INTEGER,
     productName VARCHAR (45),
     productDescription LONGTEXT
 );
