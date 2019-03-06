@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS customerAccounts(
 CREATE TABLE IF NOT EXISTS products(
     productId INTEGER PRIMARY KEY AUTO_INCREMENT, 
     productImage BLOB, 
+    price INTEGER,
     productName VARCHAR (45),
     productDescription LONGTEXT
 );

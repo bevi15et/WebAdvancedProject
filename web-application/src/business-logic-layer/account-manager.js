@@ -1,27 +1,25 @@
-const accountRepository = require('../data-acess-layer/account-repository')
-const accountValidator = require('./account-validator')
 
-module.exports = function(container){
+
+module.exports = function({accountRepository, accountValidator}){
     return{
         
-        createAccount: function(email, fullName, adress, postalCode, password, callback){
+        createAccount: function(email, fullName, password, repeatPassword, adress, postalCode, callback){
             const errors = []
 
-            const errors = accountValidator.getErrorsNewAccount(account)
+            const errors = accountValidator.getErrorsNewAccount(email, fullName, password, repeatPassword, adress, postalCode, callback)
             if(errors.length > 0){
                 callback(errors, null)
-                return
             }
-            container.accountRepository.createAccount(account, function(error,results){
-                if(error){
-                    errors.push("database error")
-                }
-                callback(errors)
+            const account = {email: email, fullName: fullName, password: password, 
+            adress: adress, postalCode: postalCode}
+            
+            accountRepository.createAccount(account, function(error, results){
+                callback(error,results)
             })
         },
         
         getAccountByUsername: function(username, callback){
-            container.accountRepository.getAccountByUsername(username, callback)
+            accountRepository.getAccountByUsername(username, callback)
         },
 
     }

@@ -1,6 +1,6 @@
-const db = require('./db')
 
-module.exports = function(container){
+
+module.exports = function({db}){
     return {
 
         getAllAccounts: function(callback){
@@ -10,9 +10,9 @@ module.exports = function(container){
 
             db.query(query, values, function(error, accounts){
                 if(error){
-                    container.getAllAccounts.callback(['databaseError'], null)  
+                    callback(['databaseError'], null)  
                 }else{
-                    container.getAllAccounts.callback([], accounts)
+                    callback([], accounts)
                 }
             })
         },
@@ -24,9 +24,9 @@ module.exports = function(container){
 
             db.query(query, values, function(error, accounts){
                 if(error){
-                    container.getAccountByUsername.callback(['databaseError'], null)
+                    getAccountByUsername.callback(['databaseError'], null)
                 }else{
-                    container.getAccountByUsername.callback([], accounts[0])
+                    getAccountByUsername.callback([], accounts[0])
                 }
             })
         },
@@ -38,9 +38,9 @@ module.exports = function(container){
 
             db.query(query, values, function(error, results){
                 if(error){
-                    container.createAccount.callback(error, null)
+                    callback(error, null)
                 }else{
-                    container.createAccount.callback(null, results.insertID)
+                    callback(null, results.insertID)
                 }
             })
         }

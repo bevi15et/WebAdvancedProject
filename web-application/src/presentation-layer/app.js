@@ -1,9 +1,20 @@
 const path = require('path')
 const express = require('express')
 const expressHandlebars = require('express-handlebars')
-//const expressSession = require('express-session')
 const accountManager = require("../business-logic-layer/account-manager")
-const bodyParser = require()
+const bodyParser = require("body-parser")
+
+const awilix = require('awilix')
+const accountRepositoryfunc = require('../data-acess-layer/account-repository')
+const accountValidatorfunc = require('../business-logic-layer/account-validator')
+const db = require('../data-acess-layer/db')
+const container = awilix.createContainer()
+container.register('accountRepository', awilix.asFunction(accountRepositoryfunc))
+container.register('accountValidator', awilix.asFunction(accountValidatorfunc))
+container.register('db', awilix.asValue(db))
+const accountRepository = container.resolve('accountRepository')
+const accountValidator = container.resolve('accountValidator')
+const myDb = container.resolve('db')
 
 const app = express()
 
@@ -15,26 +26,22 @@ app.engine("hbs", expressHandlebars({
     layoutsDir: path.join(__dirname, 'layouts')
 }))
 
-app.use(expressSession({
-    secret: 'keyboard dog',
-    resave: false,
-    saveUninitialized: true
-}))
+app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use(express.static(path.join(__dirname, 'public')))
 
 
 const DB = require("../data-acess-layer/db")
 app.get('/', function(req, res){
-    const values = ["1", "2"]
-    const query = `INSERT INTO orders (customerId, productId) VALUES (?, ?)`
-    const selectQuery = `SELECT * FROM orders`
-    const dropQuery = `DROP TABLE costumerAccounts`
+    //const values = []
+    //const query = `INSERT INTO orders (customerId, productId) VALUES (?, ?)`
+    const selectQuery = `SELECT * FROM customerAccounts`
+    //const dropQuery = `DROP TABLE costumerAccounts`
     console.log("sending")
-    DB.query(query, values, function(error){
-        console.log(error)
-    })
-    DB.query(selectQuery, function(error, user){
+    //DB.query(query, values, function(error){
+    //    console.log(error)
+    //})
+    myDb.query(selectQuery, function(error, user){
         console.log(error)
         console.log("1")
         console.log(user)
@@ -59,12 +66,12 @@ app.get('/Profile', function(req, res){
 
 app.post('/create_account', function(req, res){
 
-    const email = req.params.email
-    const fullName = req.params.fullName
-    const password = req.params.password
-    const repeatPassword = req.params.repeatPassword
-    const adress = req.params.adress
-    const postalCode = req.params.postalCode
+    const email = req.body.email
+    const fullName = req.body.fullName
+    const password = req.body.password
+    const repeatPassword = req.body.repeatPassword
+    const adress = req.body.adress
+    const postalCode = req.body.postalCode
     
     accountManager.createAccount(email, fullName, password, repeatPassword, adress, postalCode, function(error){
         
@@ -72,6 +79,8 @@ app.post('/create_account', function(req, res){
   
     
 })
+
+//app.use("/account",accountRouter)
 
 app.get('/CreateItem', function(req, res){
     res.render("createItem.hbs")
