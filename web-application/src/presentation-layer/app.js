@@ -8,14 +8,13 @@ const productRouter = require('./routers/product-router')
 
 
 const app = express()
-
-// Setup express-handlebars.
 app.set('views', path.join(__dirname, 'views'))
 
 app.engine("hbs", expressHandlebars({
     extname:"hbs",
     defaultLayout: "main",
-    layoutsDir: path.join(__dirname, 'layouts')
+    layoutsDir: path.join(__dirname, 'layouts'),
+    partialsDir: path.join(__dirname, "views/partials"),
 }))
 
 
