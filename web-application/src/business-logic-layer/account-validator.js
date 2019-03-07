@@ -1,4 +1,4 @@
-
+const passwordMinLength = 6
 
 module.exports = function(){
     return{
@@ -6,24 +6,33 @@ module.exports = function(){
         getErrorNewAccount: function(email, fullName, password, repeatPassword, adress, postalCode, callback){
             const errors = []
         
-            if(!validateEmail(email)){
-                errors.push("emailNotValid")
+            if(!email.includes("@")){
+                errors.push("email not valid")
             }else if(fullName.length == 0){
-                errors.push("fullNameMissing")
+                errors.push("full name missing")
+            }else if(password.length < passwordMinLength){
+                errors.push("password too short, at least 6 characters")
             }else if(password != repeatPassword ){
-                errors.push("passordsNotMatching")
+                errors.push("passords does not match")
             }else if(adress.length == 0){
-                errors.push("adressMissing")
+                errors.push("adress missing")
             }else if(postalCode.length == 0){
-                errors.push("postalCodeMissing")
+                errors.push("postal code missing")
             }
             callback(errors)
         },
 
-        validateEmail(email){
-            var regex = /\S+@\S+/;
-            return regex.test(email);
-        }
+        signIn: function(email, password, callback){
+            const errors = []
+
+            if(email.length == 0){
+                errors.push("enter email please!")
+            }else if(password.length == 0){
+                errors.push("enter password please!")
+            }
+            callback(errors)
+        },
+        
     }
 }
 

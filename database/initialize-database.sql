@@ -1,7 +1,7 @@
-CREATE TABLE IF NOT EXISTS customerAccounts(
-    customerId INTEGER PRIMARY KEY AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS accounts(
+    accountId INTEGER PRIMARY KEY AUTO_INCREMENT,
     fullName VARCHAR(50),
-    email VARCHAR(50),
+    email VARCHAR(50) UNIQUE,
     adress VARCHAR (100),
     postalCode varchar(50),
     password VARCHAR(25)
@@ -19,10 +19,10 @@ CREATE TABLE IF NOT EXISTS products(
 
 CREATE TABLE IF NOT EXISTS orders(
     orderId INTEGER AUTO_INCREMENT NOT NULL, 
-    customerId INTEGER,
+    accountId INTEGER,
     productId INTEGER,
     PRIMARY KEY(orderId),
-    CONSTRAINT FOREIGN KEY(customerId) REFERENCES customerAccounts(customerId),
+    CONSTRAINT FOREIGN KEY(accountId) REFERENCES accounts(accountId),
     CONSTRAINT FOREIGN KEY(productId) REFERENCES products(productId)
     
 );

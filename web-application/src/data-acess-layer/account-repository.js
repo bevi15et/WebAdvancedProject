@@ -33,16 +33,28 @@ module.exports = function({db}){
 
         createAccount: function(account, callback){
 
-            const query = `INSERT INTO customerAccounts (fullName, email, adress, postalCode, password) VALUES (?, ?, ?, ?, ?)` 
+            const query = `INSERT INTO accounts (fullName, email, adress, postalCode, password) VALUES (?, ?, ?, ?, ?)` 
             const values = [account.fullName, account.email, account.adress, account.postalCode, account.password]
 
-            db.query(query, values, function(error, results){
+            db.query(query, values, function(error){
+                callback(error)
+            })
+        },
+
+        singIn: function(account, callback){
+            const query = `SELECT * FROM accounts WHERE email = ? AND password = ?`
+            const values = [account.email, account.password]
+
+            db.query(query, values, function(error, account){
                 if(error){
                     callback(error, null)
-                }else{
-                    callback(null, results.insertID)
+                }else {
+                    callback(null, account[0])
                 }
             })
+
         }
+
+
     }
 }
