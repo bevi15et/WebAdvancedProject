@@ -9,7 +9,7 @@
 
             <form action="changePassword">
                 new pass: <input type="text" name="changePassword"><br>
-            repeat new pass:  <input type="text" name="repeatChangePassword"><br>
+                repeat new pass:  <input type="text" name="repeatChangePassword"><br>
             <input type="button" value="change password" name="changePasswordButton">
             </form>
         
@@ -18,7 +18,7 @@
                 <ul>
                     {{#each orders}}
                         <li>Order: {{orderId}}
-                            {{#each droducts}}
+                            {{#each products}}
                                 <li>Item: {{productId}}</li>
                             {{/each}}
                         </li>
@@ -29,25 +29,25 @@
     
     {{else}} <!-- IF NOT LOGGED IN -->
         <div class="section box">
-            <form action="login" method="get">
+            <form action="/accounts/login" method="POST">
                 <p>login</p><br>
-                name<input type="text" name="username"><br>
-                pass<input type="text" name="password"><br>
-                <input type="button" value="login" name="loginButton">
+                email<input type="text" name="email"><br>
+                password<input type="password" name="password"><br>
+                <input type="submit" value="login" name="loginButton">
                 <input type="button" value="forgot password" name="forgotPasswordButton">
             </form>
         </div>
 
         <div class="section box">
-            <form action="create_account" method="post">
+            <form action="/accounts/create_account" method="POST">
                 <p>Create new account</p><br>
                 email<input type="text" name="email"><br>   
                 full name<input type="text" name="fullName"><br>
-                password<input type="text" name="password"><br>
-                repeat password<input type="text" name="repeatPassword"><br>
+                password<input type="password" name="password"><br>
+                repeat password<input type="password" name="repeatPassword"><br>
                 street adress<input type="text" name="adress"><br>
                 postal code<input type="text" name="postalCode"><br>
-                <input type="button" value="create" name="createAccountButton">
+                <input type="submit" value="Create">
             </form>
         </div>
 
