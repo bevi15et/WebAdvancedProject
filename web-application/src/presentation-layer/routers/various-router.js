@@ -3,7 +3,6 @@ const expressSession = require('express-session')
 
 const router = express.Router()
 
-
 router.use(expressSession({
     secret: "sdaajsndakjndajks", 
     resave: false,
@@ -28,5 +27,10 @@ router.get('/Profile', function(req, res){
     }
     res.render("profile.hbs", model)
 })
+
+router.get('/addProduct', function(req, res) {
+    res.render("addProduct.hbs")
+})
+
 
 module.exports = router
