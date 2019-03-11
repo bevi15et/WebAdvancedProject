@@ -1,12 +1,14 @@
 <div class="container1">
 
     <div class="section box">
-        <form action="create_account" method="post">
+        <form action="/addProduct" method="POST" enctype="multipart/form-data">
             <p class="h1">Handle item</p><br>
-            Product name<input type="text" name="newProductName"><br>
-            img url<input type="text" name="newProductImageUrl"><input type="button" value="upload" name="newProductImageUploadButton"><br>
-            Product description<input type="text-area" name="newProductDescription"><br>
-            <input type="button" value="create product" name="newProductAddButton">
+            {{message}}
+            Product name: <input type="text" name="newProductName"><br>
+            Product description: <input type="text-area" name="newProductDescription"><br>
+            price: <input type="text" class="text" name="newProductPrice"><br><br>
+            img<input type="file" name="productImage"><br><br>
+            <input type="submit" value="create product">
         </form>
     </div>
     
