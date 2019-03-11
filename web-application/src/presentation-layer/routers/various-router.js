@@ -13,4 +13,9 @@ router.get('/Basket', function(req, res){
 
 
 
+router.get('/addProduct', function(req, res) {
+    res.render("addProduct.hbs")
+})
+
+
 module.exports = router

@@ -8,6 +8,18 @@ const variousRouter = require('./routers/various-router')
 const accountRouter = require('./routers/account-router')
 const productRouter = require('./routers/product-router')
 
+// MULTER //
+const multer = require('multer')
+const storage = multer.diskStorage({
+    destination: function(req, file, callback){
+        callback(null, '../public/uploads')
+    },
+    filename: function(req, file, callback){
+        callback(null, file.fieldname + '_' + Date.now())
+    }
+})
+const upload = multer({storage: storage})
+// MULTER //
 
 const app = express()
 
@@ -20,9 +32,9 @@ app.set('views', path.join(__dirname, 'views'))
 app.engine("hbs", expressHandlebars({
     extname:"hbs",
     defaultLayout: "main",
-    layoutsDir: path.join(__dirname, 'layouts')
+    layoutsDir: path.join(__dirname, 'layouts'),
+    partialsDir: path.join(__dirname, "views/partials"),
 }))
-
 
 // Handle static files in the public folder.
 app.use(express.static(path.join(__dirname, 'public')))
@@ -41,10 +53,6 @@ app.use(expressSession({
 app.use('/', variousRouter)
 app.use('/accounts', accountRouter)
 app.use('/products', productRouter)
-
-
-
-
 
 const DB = require("../data-acess-layer/db")
 app.get('/', function(req, res){
@@ -72,6 +80,28 @@ app.get('/', function(req, res){
     res.render("home.hbs")
 })
 
+// MULTER //
+
+app.post('/addProduct', upload.single('productImage'), function(req, res){
+    const image = req.file
+    const name = req.body.newProductName
+    const description = req.body.newProductDescription
+    const price = req.body.newProductPrice
+
+    console.log("Body: ", req.body)
+    console.log("Image: ", image)
+
+    const model = {
+        productName: name,
+        productDescription: description,
+        productPrice: price,
+        productImage: image
+    }
+
+    res.send(model)
+})
+
+// MULTER //
 
 
 app.listen(8080, function(){
