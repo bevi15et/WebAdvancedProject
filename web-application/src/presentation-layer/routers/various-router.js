@@ -4,7 +4,18 @@ const router = express.Router()
 
 
 router.get('/Selection', function(req, res){
-    res.render("selection.hbs")
+    //TILLFÄLLIGT
+    if(req.session.isLoggedIn){
+        const isLoggedInAsAdmin = req.session.loggedInAccount.admin
+        const model = {
+            isLoggedInAsAdmin: isLoggedInAsAdmin
+        }
+        res.render("selection.hbs", model)
+    }else{
+        res.render("selection.hbs")
+    }
+    
+
 })
 
 router.get('/Basket', function(req, res){

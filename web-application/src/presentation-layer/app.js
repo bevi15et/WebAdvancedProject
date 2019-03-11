@@ -9,6 +9,7 @@ const accountRouter = require('./routers/account-router')
 const productRouter = require('./routers/product-router')
 
 // MULTER //
+/*
 const multer = require('multer')
 const storage = multer.diskStorage({
     destination: function(req, file, callback){
@@ -19,6 +20,7 @@ const storage = multer.diskStorage({
     }
 })
 const upload = multer({storage: storage})
+*/
 // MULTER //
 
 const app = express()
@@ -82,24 +84,7 @@ app.get('/', function(req, res){
 
 // MULTER //
 
-app.post('/addProduct', upload.single('productImage'), function(req, res){
-    const image = req.file
-    const name = req.body.newProductName
-    const description = req.body.newProductDescription
-    const price = req.body.newProductPrice
 
-    console.log("Body: ", req.body)
-    console.log("Image: ", image)
-
-    const model = {
-        productName: name,
-        productDescription: description,
-        productPrice: price,
-        productImage: image
-    }
-
-    res.send(model)
-})
 
 // MULTER //
 
