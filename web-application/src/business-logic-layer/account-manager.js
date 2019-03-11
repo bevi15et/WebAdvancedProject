@@ -1,4 +1,4 @@
-
+const bcrypt = require('bcryptjs')
 
 module.exports = function({accountRepository, accountValidator}){
     return{
@@ -8,14 +8,24 @@ module.exports = function({accountRepository, accountValidator}){
                 if(errors.length > 0){
                     callback(errors)
                 }else{
-                    const account = {email: email, fullName: fullName, password: password, 
-                        adress: adress, postalCode: postalCode}
-                        
-                    accountRepository.createAccount(account, function(error){
-                        if(error){
-                            errors.push("Internal database error, try again later!")
-                        }
-                        callback(errors)
+                    bcrypt.genSalt(10, function(err, salt) {
+                        bcrypt.hash(password, salt, function(err, hash) {
+                            if(err) {
+                                errors.push("Failed to hash the password!")
+                                callback(errors)
+                            }   else    {
+                                const account = {email: email, fullName: fullName, password: hash, 
+                                    adress: adress, postalCode: postalCode}
+                                    
+                                accountRepository.createAccount(account, function(error){
+                                    if(error){
+                                        errors.push(error)
+                                        callback(errors)
+                                    }
+                                    callback(errors)
+                                })
+                            }
+                        })
                     })
                 }
             })
@@ -24,29 +34,119 @@ module.exports = function({accountRepository, accountValidator}){
 
 
         signIn: function(email, password, callback){
-            accountValidator.signIn(email, password, callback, function(errors){
+            accountValidator.signIn(email, password, function(errors){
                 if(errors.length > 0){
-                    callback(errors)
+                    callback(errors, null)
                 }else{
-                    const account = {email: email, password: password}
-                    accountRepository.signIn(account, function(error, account){
-                        if(error){
-                            errors.push("Wrong email and/or password")
+                    const userAccount = {email: email}
+                    accountRepository.signIn(userAccount, function(error, dbAccount){
+                        if(typeof dbAccount === "undefined"){
+                            errors.push("Wrong Email and/or Password")
                             callback(errors, null)
                         }else{
-                            callback(errors, account)
+                            bcrypt.compare(password, dbAccount.password, function(err, result){
+                                if(result == true){
+                                    callback(errors, dbAccount)
+                                }else{
+                                    errors.push("Wrong Email and/or Password")
+                                    callback(errors, null)
+                                }
+                            })
                         }
                     })
+                }
+            })
+        },
+
+
+        getAccountInformationById: function(account ,callback){
+            let accountId;
+            if(account){
+                accountId = account.accountId;
+            }else{
+                callback(["Error"], null)
+                return
+            }
+            accountRepository.getAccountInformationById(accountId, function(error,user){
+                const errors = []
+                if(error){
+                    errors.push(error)
+                }else if(user == null){
+                    errors.push("no user found")
+                }else{
+                    callback(null, user)
                 }
             })
         },
         
 
 
+        updateInformationById: function(accountId, email, fullName, adress, postalCode, callback){
+            accountValidator.getErrorUpdateAccount(email, fullName, adress, postalCode, function(errors){
+                if(errors.length > 0){
+                    callback(errors)
+                }else{
+                    const account = {accountId: accountId, email: email,
+                        fullName: fullName, adress: adress, postalCode: postalCode}
 
-        getAccountByUsername: function(username, callback){
-            accountRepository.getAccountByUsername(username, callback)
+                    accountRepository.updateInformationById(account, function(error){
+                        if(error){
+                            callback(error)
+                        }else{
+                            callback(errors)
+                        }
+                    })
+                }
+            })  
         },
+
+
+        updatePasswordById: function(accountId, newPassword, repeatNewPassword, callback){
+            
+            accountValidator.getErrorUpdatePassword(newPassword, repeatNewPassword, function(errors){
+                if(errors.length > 0){
+                    callback(errors)
+                }else{
+                    bcrypt.genSalt(10, function(err, salt) {
+                        if(err){
+                            errors.push("Failed generating salt!")
+                            callback(errors)
+                        }else{
+                            bcrypt.hash(newPassword, salt, function(err, hash) {
+                                if(err){
+                                    errors.push("Failed to hash the password!")
+                                    callback(errors)
+                                }else{
+                                    const accountPw = {accountId: accountId, newPassword: hash}
+                                    accountRepository.updatePasswordById(accountPw, function(error){
+                                    if(error){
+                                        errors.push("Internal database error, try again later!")
+                                        callback(error)
+                                    }else{
+                                        callback(errors)
+                                    }
+                                })
+                                }
+                            })
+                        }
+                    })
+                }
+            })
+        },
+
+
+        deleteAccountById: function(accountId, callback){
+            const errors = []
+            accountRepository.deleteAccountById(accountId, function(error){
+                if(error){
+                    errors.push("Internal database error, try again later!")
+                    callback(error)
+                }else{
+                    callback(errors)
+                }
+            })
+        },
+    
 
     }
 }
