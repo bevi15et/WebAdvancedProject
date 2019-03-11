@@ -1,19 +1,110 @@
 
-<div class="container1">
+<style>
+    .not-current-page{
+        display:none;
+    }
+</style>
+
+<div class="container">
     {{#if isLoggedIn}}<!-- IF LOGGED IN -->
         <div class="selection box">
-            <p>Welcome (username)</p><br>
-            <p>namn: </p>
-            <p>email: </p>
-            <p>adress: </p>
-
-            <form action="changePassword">
-                new pass: <input type="text" name="changePassword"><br>
-                repeat new pass:  <input type="text" name="repeatChangePassword"><br>
-            <input type="button" value="change password" name="changePasswordButton">
+            <form action="/accounts/deleteAccount" method="POST">
+                <a href="/accounts/log-out" class="logOut button is-danger is-rounded" type="submit">Log out</a>
+                <button class="logOut button is-danger is-rounded" type="submit">delete account</button>
             </form>
+            <br>
+
+            <!--  Update user info    -->
+            {{#unless updateError}}
+                <div class="hidden">
+            {{/unless}}
+            <form action="/accounts/updateInformation" method="POST">
+                <p>Welcome {{fullName}}</p><br>
+                
+                <div class="field">
+                    Name: <br><br><p class="control has-icons-left has-icons-right">
+                        <input class="input" type="text" value="{{fullName}}" name="fullName">
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-user"></i>
+                        </span>
+                    </p>
+                </div>
+                <div class="field">
+                    Email: <br><br><p class="control has-icons-left has-icons-right">
+                        <input class="input" type="Email" value="{{email}}" name="email">
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-envelope"></i>
+                        </span>
+                    </p>
+                </div>
+                <div class="field">
+                    Adress: <br><br><p class="control has-icons-left has-icons-right">
+                        <input class="input" type="text" value="{{adress}}" name="adress">
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-address-card"></i>
+                        </span>
+                    </p>
+                </div>
+                <div class="field">
+                    Postal Town: <br><br><p class="control has-icons-left has-icons-right">
+                        <input class="input" type="text" value="{{postalCode}}" name="postalCode">
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-city"></i>
+                        </span>
+                    </p>
+                </div>
+                <br>
+                <br>
+                {{#each ./updateError}}
+                    <p class="errorClass">{{this}}</p>
+                {{/each}}
+                <br>
+                <input class="button is-info" type="submit" value="update information">
+            </form><br><br>
+            {{#unless updateError}}
+                </div>
+            {{/unless}}
+
+
+            <!--  change user password    -->
+            {{#unless ./changePasswordError}}
+                <div class="hidden">
+            {{/unless}}
+
+            <form action="/accounts/changePassword" method="POST">
+
+                <div class="field">
+                    New Password: <br><br><p class="control has-icons-left has-icons-right">
+                        <input class="input" type="password" name="newPassword">
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                    </p>
+                </div>
+                <div class="field">
+                    Repeat new password: <br><br><p class="control has-icons-left has-icons-right">
+                        <input class="input" type="password" name="repeatNewPassword">
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                    </p>
+                </div>
+                <br>
+                <br>
+                {{#each ./changePasswordError}}
+                    <p class="errorClass">{{this}}</p>
+                {{/each}}
+                <br>
+                <input class="button is-info" type="submit" value="change password" name="changePasswordButton">
+                <br>
+            </form>
+            <br>
+
+            {{#unless ./changePasswordError}}
+                </div>
+            {{/unless}}
         
-            <div>
+            <div class="order-history">
                 <p>old orders:</p>
                 <ul>
                     {{#each orders}}
@@ -27,29 +118,128 @@
             </div>
         </div>
     
-    {{else}} <!-- IF NOT LOGGED IN -->
-        <div class="section box">
+    {{else}} 
+    
+    
+    <!-- IF NOT LOGGED IN -->
+
+    <div id="sections">
+
+        <!-- Sign in user -->
+        <section class="box">
             <form action="/accounts/login" method="POST">
-                <p>login</p><br>
-                email<input type="text" name="email"><br>
-                password<input type="password" name="password"><br>
-                <input type="submit" value="login" name="loginButton">
-                <input type="button" value="forgot password" name="forgotPasswordButton">
+                <div class="field">
+                    <p class="control has-icons-left has-icons-right">
+                        <input class="input" type="email" placeholder="Email" name="email">
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-envelope"></i>
+                        </span>
+                    </p>
+                </div>
+                <div class="field">
+                    <p class="control has-icons-left">
+                        <input class="input" type="password" placeholder="Password" name="password">
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                    </p>
+                </div>
+                <div class="field">
+                    <p class="control">
+                        <input class="button is-success" type="submit" value="login" name="loginButton">
+                        <button class="button is-info inputToBeClicked" type="button" href="/register" value="register">register</button>
+                    </p>
+                </div>
             </form>
-        </div>
+            <br>
+            {{#each ./errors}}
+                    <p class="errorClass">{{this}}</p>
+            {{/each}}
+        </section>
 
-        <div class="section box">
+
+        <!-- Create user account -->
+        <section class="box">
             <form action="/accounts/create_account" method="POST">
-                <p>Create new account</p><br>
-                email<input type="text" name="email"><br>   
-                full name<input type="text" name="fullName"><br>
-                password<input type="password" name="password"><br>
-                repeat password<input type="password" name="repeatPassword"><br>
-                street adress<input type="text" name="adress"><br>
-                postal code<input type="text" name="postalCode"><br>
-                <input type="submit" value="Create">
-            </form>
-        </div>
 
+                <div class="field">
+                    <p class="control has-icons-left has-icons-right">
+                        <input class="input" type="email" placeholder="Email" name="email">
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-envelope"></i>
+                        </span>
+                    </p>
+                </div>
+                <div class="field">
+                    <p class="control has-icons-left has-icons-right">
+                        <input class="input" type="text" placeholder="Full Name" name="fullName">
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-user"></i>
+                        </span>
+                    </p>
+                </div>
+                <div class="field">
+                    <p class="control has-icons-left has-icons-right">
+                        <input class="input" type="text" placeholder="Adress" name="adress">
+                        <span class="icon is-small is-left">
+                           <i class="fas fa-address-card"></i>
+                        </span>
+                    </p>
+                </div>
+                <div class="field">
+                    <p class="control has-icons-left has-icons-right">
+                        <input class="input" type="text" placeholder="Post Town" name="postalCode">
+                        <span class="icon is-small is-left">
+                           <i class="fas fa-city"></i>
+                        </span>
+                    </p>
+                </div>
+                <div class="field">
+                    <p class="control has-icons-left">
+                        <input class="input" type="password" placeholder="Password" name="password">
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                    </p>
+                </div>
+                <div class="field">
+                    <p class="control has-icons-left">
+                        <input class="input" type="password" placeholder="Repeat Password" name="repeatPassword">
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                    </p>
+                </div>
+                <div class="field">
+                    <p class="control">
+                        <input class="button is-success" type="submit" value="Create" name="loginButton">
+                        <button class="button is-info inputToBeClicked" type="button" href="/login" value="login">Login</button>
+                    </p>
+                </div>
+                {{#each ./errors}}
+                    <p class="errorClass">{{this}}</p>
+                {{/each}}
+                
+            </form>
+            
+        </section>
+    </div>
     {{/if}}
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+        const sections = document.querySelectorAll("section")
+        const inputs = document.getElementsByClassName("inputToBeClicked")
+        sections[1].classList.add("not-current-page")
+
+        for(const input of inputs){
+            input.addEventListener("click", function(event){
+                event.preventDefault()
+                sections[0].classList.toggle("not-current-page")
+                sections[1].classList.toggle("not-current-page")
+            })
+        }
+    })
+
+</script>

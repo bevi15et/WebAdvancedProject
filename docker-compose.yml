@@ -16,3 +16,7 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=theRootPassword
       - MYSQL_DATABASE=webAppDatabase
+  redis:
+    build: ./redis
+    ports:
+      - "6379:6379"

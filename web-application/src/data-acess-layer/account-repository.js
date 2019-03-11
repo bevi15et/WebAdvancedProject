@@ -3,33 +3,6 @@
 module.exports = function({db}){
     return {
 
-        getAllAccounts: function(callback){
-
-            const query = `SELECT * FROM accounts ORDER BY username`
-            const values = []
-
-            db.query(query, values, function(error, accounts){
-                if(error){
-                    callback(['databaseError'], null)  
-                }else{
-                    callback([], accounts)
-                }
-            })
-        },
-
-        getAccountByUsername: function(username, callback){
-
-            const query = `SELECT * FROM accounts WHERE username = ? LIMIT 1`
-            const values = [username]
-
-            db.query(query, values, function(error, accounts){
-                if(error){
-                    getAccountByUsername.callback(['databaseError'], null)
-                }else{
-                    getAccountByUsername.callback([], accounts[0])
-                }
-            })
-        },
 
         createAccount: function(account, callback){
 
@@ -41,19 +14,69 @@ module.exports = function({db}){
             })
         },
 
-        singIn: function(account, callback){
-            const query = `SELECT * FROM accounts WHERE email = ? AND password = ?`
-            const values = [account.email, account.password]
 
-            db.query(query, values, function(error, account){
+        signIn: function(account, callback){
+            const query = `SELECT * FROM accounts WHERE email = ?`
+
+            db.query(query, account.email, function(error, account){
                 if(error){
                     callback(error, null)
                 }else {
-                    callback(null, account[0])
+                    callback(error, account[0])
                 }
             })
 
-        }
+        },
+
+
+        getAccountInformationById: function(id, callback){
+            const query = `SELECT fullName, email, adress, postalCode FROM accounts WHERE accountId = ?`
+            const value = [id]
+            db.query(query, value, function(error, user){
+                if(user){
+                    callback(null, user[0])
+                }else{
+                    callback(error, null)
+                }
+            })
+        },
+        
+
+        updateInformationById: function(account, callback){
+            const query =  `UPDATE accounts 
+                            SET fullName = ?, email = ?, adress = ?, postalCode = ? 
+                            WHERE accountId = ?`
+            const values = [account.fullName, account.email, account.adress, account.postalCode, account.accountId]
+
+            db.query(query, values, function(error){
+                callback(error)
+            })
+        },
+
+
+        updatePasswordById: function(accountPw, callback){
+            const query = `UPDATE accounts SET password = ? WHERE accountId = ?`
+            const values = [accountPw.newPassword, accountPw.accountId]
+
+            db.query(query, values, function(error){
+                callback(error)
+            })
+        },
+
+
+        deleteAccountById: function(accountId, callback){
+            const query = `DELETE FROM accounts WHERE accountId = ?`
+            const value = [accountId]
+
+            db.query(query, value, function(error){
+                callback(error)
+            })
+        },
+
+
+
+
+
 
 
     }

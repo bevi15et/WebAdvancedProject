@@ -54,24 +54,45 @@ span.navbar-burger{
 }
 
 .container1{
-    margin-left: 5rem;
-    margin-right: 5rem;
+    margin-left: 10px;
+    margin-right: 10px;
     height: 100%;
     background-color: grey;
     align-content: center;
     justify-content: center;
 }
 
+
 .buttons{
     align-items: right;
     height: 2rem;
 }
 
-.container1 section{
-    margin: 3rem;
+.logOut {
+    float: right;
+}
+
+.order-history{
+    margin-top: 5rem;
 }
 
 
+.errorClass{
+    color: red;
+    font-style: normal;
+}
+
+#sections{
+    margin: auto;
+    margin-top: 5rem;
+    width: 30rem;
+}
+
+.selection.box{
+    margin: auto;
+    margin-top: 5rem;
+    width: 50%;
+}
 
 
 .image{
