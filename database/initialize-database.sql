@@ -4,7 +4,8 @@ CREATE TABLE IF NOT EXISTS accounts(
     email VARCHAR(50) UNIQUE,
     adress VARCHAR (100),
     postalCode varchar(50),
-    password VARCHAR(255)
+    password VARCHAR(255),
+    admin VARCHAR(10)
 );
 
 
