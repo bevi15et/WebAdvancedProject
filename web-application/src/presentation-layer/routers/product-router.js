@@ -9,7 +9,7 @@ const storage = multer.diskStorage({
         callback(null, '../web-application/src/presentation-layer/public/uploads')
     },
     filename: function(req, file, callback){
-        callback(null, file.fieldname + '_' + Date.now() + file.originalname)
+        callback(null, file.fieldname + '_' + Date.now() + '_' + file.originalname)
     }
 })
 const upload = multer({storage: storage})
@@ -30,7 +30,7 @@ router.get('/addProduct', function(req, res){
 })
 
 router.post('/addProduct', upload.single('productImage'), function(req, res){
-    const image = req.file
+    const imageURL = req.file.path
     const name = req.body.newProductName
     const description = req.body.newProductDescription
     const price = req.body.newProductPrice
@@ -42,7 +42,7 @@ router.post('/addProduct', upload.single('productImage'), function(req, res){
         productName: name,
         productDescription: description,
         productPrice: price,
-        productImage: image
+        productImage: imageURL
     }
 
     res.send(model)
