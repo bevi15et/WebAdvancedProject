@@ -4,8 +4,13 @@
         <p>Items in your basket:</p><br>
         <ul>
             {{#each order.producId}} <!-- Show all products in basket -->
-            <li> {{productName}}, {{productPrice}} </li>
+                <li> 
+                    {{productName}}, 
+                    {{productPrice}},
+                    <a class="button is-primary is-rounded">Remove item</a>
+                </li>
             {{/each}}
         </ul>
+        <a class="button is-primary is-rounded">Empty basket</a>
     </div>
 </div>

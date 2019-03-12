@@ -6,10 +6,10 @@
         <div class="buttons">
             <a href="/productDetails" class="button is-primary is-rounded">View</a>
             {{#if isLoggedInAsAdmin}} <!-- only available to admin -->
-                <a href="/updateItem" class="button is-primary is-rounded">Update</a>
-                <a class="button is-primary is-rounded">Delete</a>
+                <a href="/products/updateItem" class="button is-primary is-rounded">Update</a>
+                <a href="/products/deleteProduct" class="button is-primary is-rounded">Delete</a>
             {{else}}
-                <a class="button is-primary is-rounded">Add to basket</a>
+                <a href="/orders/addProductToBasket" class="button is-primary is-rounded">Add to basket</a>
                 <a href="/selection" class="button is-primary is-rounded">Continue shopping</a>
             {{/if}}
         </div>

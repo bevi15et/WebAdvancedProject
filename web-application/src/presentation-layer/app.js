@@ -55,6 +55,7 @@ app.use(expressSession({
 app.use('/', variousRouter)
 app.use('/accounts', accountRouter)
 app.use('/products', productRouter)
+app.use('/orders', orderRouter)
 
 const DB = require("../data-acess-layer/db")
 app.get('/', function(req, res){

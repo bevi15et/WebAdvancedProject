@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS accounts(
 
 CREATE TABLE IF NOT EXISTS products(
     productId INTEGER PRIMARY KEY AUTO_INCREMENT, 
-    productImage BLOB, 
+    productImage TEXT, 
     price INTEGER,
     productName VARCHAR (45),
     productDescription LONGTEXT
@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS orders(
     orderId INTEGER AUTO_INCREMENT NOT NULL, 
     accountId INTEGER,
     productId INTEGER,
+    orderStatus TEXT,
     PRIMARY KEY(orderId),
     CONSTRAINT FOREIGN KEY(accountId) REFERENCES accounts(accountId),
     CONSTRAINT FOREIGN KEY(productId) REFERENCES products(productId)
