@@ -56,7 +56,7 @@ module.exports = function({db}){
 
         updatePasswordById: function(accountPw, callback){
             const query = `UPDATE accounts SET password = ? WHERE accountId = ?`
-            const values = [accountPw.newPassword, accountPw.accountId]
+            const values = [accountPw.newPassword, accountPw.account]
 
             db.query(query, values, function(error){
                 callback(error)

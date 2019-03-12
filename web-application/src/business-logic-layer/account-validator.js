@@ -43,10 +43,8 @@ module.exports = function(){
 
             if(newPassword != repeatNewPassword){
                 errors.push("Passwords doesn't match!")
-            }else if(newPassword.length == 0){
-                errors.push("Password missing")
-            }else if(repeatNewPassword.length == 0){
-                errors.push("Repeat password missing")
+            }else if(newPassword.length < passwordMinLength){
+                errors.push("Password too short, at least 6 characters")
             }
             callback(errors)
         },
