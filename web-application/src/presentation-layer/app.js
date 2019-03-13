@@ -7,6 +7,7 @@ const redisStore = require('connect-redis')(expressSession)
 const variousRouter = require('./routers/various-router')
 const accountRouter = require('./routers/account-router')
 const productRouter = require('./routers/product-router')
+const orderRouter = require('./routers/order-router')
 
 // MULTER //
 /*
@@ -35,7 +36,7 @@ app.engine("hbs", expressHandlebars({
     extname:"hbs",
     defaultLayout: "main",
     layoutsDir: path.join(__dirname, 'layouts'),
-    partialsDir: path.join(__dirname, "views/partials"),
+    partialsDir: path.join(__dirname, 'views/partials'),
 }))
 
 // Handle static files in the public folder.

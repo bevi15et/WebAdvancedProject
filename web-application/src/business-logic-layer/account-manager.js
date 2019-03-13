@@ -13,7 +13,7 @@ module.exports = function({accountRepository, accountValidator}){
                             if(err) {
                                 errors.push("Failed to hash the password!")
                                 callback(errors)
-                            }   else    {
+                            }else{
                                 const account = {email: email, fullName: fullName, password: hash, 
                                     adress: adress, postalCode: postalCode}
                                 accountRepository.createAccount(account, function(error){

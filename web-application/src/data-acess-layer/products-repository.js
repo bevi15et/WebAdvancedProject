@@ -1,3 +1,5 @@
+
+
 module.exports = function({db}){
     return {
 
@@ -22,9 +24,9 @@ module.exports = function({db}){
 
             db.query(query, values, function(error, product){
                 if(error){
-                    getProductById.callback(['databaseError'], null)
+                    callback(['databaseError'], null)
                 }else{
-                    getProductById.callback([], product[0])
+                    callback([], product[0])
                 }
             })
         },
@@ -36,6 +38,14 @@ module.exports = function({db}){
 
             db.query(query, values, function(error){
                 callback(error)
+            })
+        },
+
+        
+        getLatestProductId: function(callback){
+            const query = `SELECT LAST_INSERT_ID() AS id`
+            db.query(query, function(error, id){
+                callback(error, id[0])
             })
         }
     }

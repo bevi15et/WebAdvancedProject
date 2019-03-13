@@ -1,15 +1,16 @@
-<div class="container1">
+<div class="container">
 
     <div class="section box">
         <form action="/products/addProduct" method="POST" enctype="multipart/form-data">
             <p class="h1">Handle item</p><br>
-            {{message}}
             Product name: <input type="text" name="newProductName"><br>
             Product description: <input type="text-area" name="newProductDescription"><br>
             price: <input type="text" class="text" name="newProductPrice"><br><br>
             img<input type="file" name="productImage"><br><br>
             <input type="submit" value="create product">
+            <br>
+            <p>{{error}}</p>
         </form>
     </div>
-    
 </div>
+    
