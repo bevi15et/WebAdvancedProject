@@ -22,21 +22,24 @@ router.get('/Selection', function(req, res){
     const isLoggedIn = req.session.isLoggedIn
     const account = req.session.loggedInAccount
 
-    variousManager.isLoggedInAsAdmin(account, function(errors, admin, user){
+    variousManager.isLoggedInAsAdmin(account, function(errors, admin, user, products){
+        console.log(products)
         if(admin){
             const model = {
+                products: products,
                 isLoggedInAsAdmin: admin,
                 errors: errors
             }
             res.render("selection.hbs", model)
         }else if(user){
             const model = {
+                products: products,
                 isLoggedIn: isLoggedIn,
                 errors: errors
             }
             res.render("selection.hbs", model)
         }else{
-            res.render("selection.hbs")
+            res.render("selection.hbs", {products: products})
         }
     })
 

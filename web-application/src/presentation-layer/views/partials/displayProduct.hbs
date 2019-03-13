@@ -1,14 +1,16 @@
+
+
 <div class="tile is-parent">
     <article class="tile is-child box">
-        <p class="title">{{productName}}</p>
+        <p class="title">{{this.productName}}</p>
         <p class="subtitle">{{productPrice}}</p>
-        <a href="/productDetails" class="button is-primary is-rounded">View</a>
+        <a href="/products/productDetails" class="button is-primary is-rounded">View</a>
         {{#if isLoggedInAsAdmin}} <!-- only available to admin -->
-            <a href="/updateItem" class="button is-primary is-rounded">Update</a>
+            <a href="/products/updateItem" class="button is-primary is-rounded">Update</a>
             <a class="button is-primary is-rounded">Delete</a>
         {{/if}}
         <figure class="image is-4by3">
-            <img src="{{productImage}}">
+            <img src="{{this.productImage}}">
         </figure>
     </article>
 </div>

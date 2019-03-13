@@ -16,6 +16,19 @@ module.exports = function({db}){
             })
         },
 
+
+        getAllProducts: function(callback){
+            const query = `SELECT * FROM products`
+            
+            db.query(query, function(error, products){
+                if(error){
+                    callback(error, null)
+                }else{
+                    callback(error, products)
+                }
+            })
+        }
+
         
     }
 }

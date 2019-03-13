@@ -1,20 +1,25 @@
-<div class="tile is-parent">
-    <article class="tile is-child box">
-        <p class="title">{{productName}}</p>
-        <p class="subtitle">{{productPrice}}</p>
-        <p>{{productDescription}}</p>
-        <div class="buttons">
-            <a href="/productDetails" class="button is-primary is-rounded">View</a>
-            {{#if isLoggedInAsAdmin}} <!-- only available to admin -->
-                <a href="/products/updateItem" class="button is-primary is-rounded">Update</a>
-                <a href="/products/deleteProduct" class="button is-primary is-rounded">Delete</a>
-            {{else}}
-                <a href="/orders/addProductToBasket" class="button is-primary is-rounded">Add to basket</a>
-                <a href="/selection" class="button is-primary is-rounded">Continue shopping</a>
-            {{/if}}
-        </div>
-        <figure class="image is-4by3">
-            <img src="{{productImage}}">
-        </figure>
-    </article>
+<div class="container">
+    <div class="tile is-parent">
+        <article class="tile is-child box">
+            <div class="box"><p>{{error}}</p></div>
+            <p class="title">{{product.productName}}</p>
+            <p class="subtitle">{{product.productDescription}}</p>
+            <p>{{product.price}}</p>
+            <br><br>
+            <div class="buttons">
+                <!-- <a href="/productDetails" class="button is-primary is-rounded">View</a> -->
+
+                {{#if isLoggedInAsAdmin}} <!-- only available to admin -->
+                    <a href="/products/updateItem" class="button is-primary is-rounded">Update</a>
+                    <a href="/products/deleteProduct" class="button is-primary is-rounded">Delete</a>
+                {{else}}
+                    <a href="/orders/addProductToBasket" class="button is-primary is-rounded">Add to basket</a>
+                    <a href="/selection" class="button is-primary is-rounded">Continue shopping</a>
+                {{/if}}
+            </div>
+            <figure class="image is-4by3">
+                <img src="/uploads/{{product.productImage}}">
+            </figure>
+        </article>
+    </div>
 </div>
