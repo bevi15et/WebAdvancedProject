@@ -48,7 +48,7 @@ module.exports = function({db}){
             const value = [id]
             db.query(query, value, function(error, user){
                 if(user){
-                    callback(null, user[0])
+                    callback(error, user[0])
                 }else{
                     callback(error, null)
                 }
