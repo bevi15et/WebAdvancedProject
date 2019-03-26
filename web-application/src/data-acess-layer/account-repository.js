@@ -17,6 +17,8 @@ module.exports = function({db}){
 
         signIn: function(account, callback){
             const query = `SELECT * FROM accounts WHERE email = ?`
+            const accountQuery = `SELECT accountId FROM accounts WHERE email = (?)`
+            const newOrderQuery = `INSERT INTO orders (accountId)`
 
             db.query(query, account.email, function(error, account){
                 if(error){
@@ -24,7 +26,19 @@ module.exports = function({db}){
                 }else {
                     callback(error, account[0])
                 }
+                                
+                db.query(newOrderQuery, account.accountId, function(error){
+                    if(error){
+                        console.log("ERROR OPENING NEW ORDER ON LOGIN: ", error)                    
+                        callback(error)
+                    } else {
+                        callback(null)
+                    }
+                })
+
             })
+
+ // db.query(accountQuery)
 
         },
 

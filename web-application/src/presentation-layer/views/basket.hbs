@@ -2,11 +2,12 @@
 <div class="container">
     <div class="section box">
         <p>Items in your basket:</p><br>
+        <p>{{basket.orderStatus}}</p>
         <ul>
-            {{#each order.producId}} <!-- Show all products in basket -->
+            {{#each basket.producId}} <!-- Show all products in basket -->
                 <li> 
-                    {{productName}}, 
-                    {{productPrice}},
+                    <p>Item: {{productName}}</p> 
+                    <p>price: {{productPrice}}</p>
                     <a class="button is-primary is-rounded">Remove item</a>
                 </li>
             {{/each}}
