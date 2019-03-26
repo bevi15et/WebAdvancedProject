@@ -1,7 +1,7 @@
 <div class="container">
     <div class="tile is-parent">
         <article class="tile is-child box">
-            <div class="box"><p>{{error}}</p></div>
+            <div class="box"><p>{{message}}</p></div>
             <p class="title">{{product.productName}}</p>
             <p class="subtitle">{{product.productDescription}}</p>
             <p>{{product.price}}</p>
@@ -13,7 +13,7 @@
                     <a href="/products/updateItem" class="button is-primary is-rounded">Update</a>
                     <a href="/products/deleteProduct" class="button is-primary is-rounded">Delete</a>
                 {{else}}
-                    <a href="/orders/addProductToBasket" class="button is-primary is-rounded">Add to basket</a>
+                    <a href="/orders/addProductToBasket/{{product.productId}}" class="button is-primary is-rounded">Add to basket</a>
                     <a href="/selection" class="button is-primary is-rounded">Continue shopping</a>
                 {{/if}}
             </div>

@@ -45,12 +45,6 @@ router.get('/Selection', function(req, res){
 
 })
 
-router.get('/Basket', function(req, res){
-    res.render("basket.hbs")
-})
-
-
-
 router.get('/addProduct', function(req, res) {
     res.render("addProduct.hbs")
 })
