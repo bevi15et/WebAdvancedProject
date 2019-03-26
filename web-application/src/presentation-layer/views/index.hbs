@@ -1,0 +1,123 @@
+<script src="/navigation.js"></script>
+<script src="/selection.js"></script>
+<main>
+
+<div id="home" class="current-page">
+    <div class="container0">
+    <h1 class="title has-text-centered">Ambigous shop</h1>
+
+    <div class="video-container">
+        <video autoplay loop muted>
+            <source src="video2.mp4" type="video/mp4">
+        </video>
+    </div> 
+</div>
+</div>
+
+
+<div id="selection">
+    <div class="container1">
+        <div class="section">
+         
+            <!-- only available to admin -->
+            <div id="addProductButton" class="hidden">
+                <a id="selectionAddProductButton" class="button is-primary is-rounded">Add product</a>
+            </div><br>
+            <div class="tile is-ancestor" id="selectionPostPlace">
+                <!-- Create one for each product in database -->
+             
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div id="addProduct">
+    <div class="container">
+
+        <div class="section box">
+            <p class="h1">Handle item</p><br>
+            Product name: <input type="text" class="addProductFields" name="newProductName" required><br>
+            Product description: <input type="text-area" class="addProductFields" name="newProductDescription" required><br>
+            price: <input type="text" class="text" class="addProductFields" name="newProductPrice" maxlength="10" required><br><br>
+            <input type="button" id="addProductCreateProductButton" value="create product">
+            <br>
+        </div>
+    </div>
+</div>
+
+
+<div id="productDetails">
+    <div class="container">
+        <div class="tile is-parent">
+            <article class="tile is-child box">
+                <div class="box"><p>{{error}}</p></div>
+                <p class="title">{{product.productName}}</p>
+                <p class="subtitle">{{product.productDescription}}</p>
+                <p>{{product.price}}</p>
+                <br><br>
+                <div class="buttons">
+                    <!-- <a href="/productDetails" class="button is-primary is-rounded">View</a> -->
+
+                    {{#if isLoggedInAsAdmin}} <!-- only available to admin -->
+                        <a href='/products/updateProduct?productId={{product.productId}}' class="button is-primary is-rounded" name="productId">Update</a>
+                        <a href="/selection" class="button is-primary is-rounded">Continue shopping</a>
+                        <form action="/products/deleteProduct/" method="POST">
+                            <input type="hidden" value="{{product.productId}}" name="productId">
+                            <input type="submit" class="button is-primary is-rounded" value="Delete">
+                        </form>
+                        <form>
+                            <input type="submit" class="button is-primary is-rounded" value="Add to basket">
+                        </form>
+                    {{else}}
+                        {{#if isLoggedIn}}
+                            <a href="/orders/addProductToBasket" class="button is-primary is-rounded">Add to basket</a>
+                        {{/if}}
+                        <a href="/selection" class="button is-primary is-rounded">Continue shopping</a>
+                    {{/if}}
+                </div>
+                <figure class="image is-4by3">
+                    <img src="/uploads/{{product.productImage}}">
+                </figure>
+            </article>
+        </div>
+    </div>
+
+</div>
+
+
+<div id="basket">
+    <div class="container">
+        <div class="section box">
+            <p>Items in your basket:</p><br>
+            <ul>
+                {{#each order.producId}} <!-- Show all products in basket -->
+                    <li> 
+                        {{productName}}, 
+                        {{productPrice}},
+                        <a class="button is-primary is-rounded">Remove item</a>
+                    </li>
+                {{/each}}
+            </ul>
+            <a class="button is-primary is-rounded">Empty basket</a>
+        </div>
+    </div>
+</div>
+
+
+<div id="profile">
+
+</div>
+
+
+</main>
+
+
+
+
+
+
+
+

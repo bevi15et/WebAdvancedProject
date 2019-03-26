@@ -10,10 +10,19 @@
                 <!-- <a href="/productDetails" class="button is-primary is-rounded">View</a> -->
 
                 {{#if isLoggedInAsAdmin}} <!-- only available to admin -->
-                    <a href="/products/updateItem" class="button is-primary is-rounded">Update</a>
-                    <a href="/products/deleteProduct" class="button is-primary is-rounded">Delete</a>
+                    <a href='/products/updateProduct?productId={{product.productId}}' class="button is-primary is-rounded" name="productId">Update</a>
+                    <a href="/selection" class="button is-primary is-rounded">Continue shopping</a>
+                    <form action="/products/deleteProduct/" method="POST">
+                        <input type="hidden" value="{{product.productId}}" name="productId">
+                        <input type="submit" class="button is-primary is-rounded" value="Delete">
+                    </form>
+                    <form>
+                        <input type="submit" class="button is-primary is-rounded" value="Add to basket">
+                    </form>
                 {{else}}
-                    <a href="/orders/addProductToBasket" class="button is-primary is-rounded">Add to basket</a>
+                    {{#if isLoggedIn}}
+                        <a href="/orders/addProductToBasket" class="button is-primary is-rounded">Add to basket</a>
+                    {{/if}}
                     <a href="/selection" class="button is-primary is-rounded">Continue shopping</a>
                 {{/if}}
             </div>

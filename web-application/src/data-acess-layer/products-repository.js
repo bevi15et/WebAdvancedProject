@@ -44,9 +44,50 @@ module.exports = function({db}){
         
         getLatestProductId: function(callback){
             const query = `SELECT LAST_INSERT_ID() AS id`
+
             db.query(query, function(error, id){
                 callback(error, id[0])
             })
+        },
+
+        
+        getProductInformationById: function(productId, callback){
+            const query = `SELECT productName, productDescription, price 
+                            FROM products 
+                            WHERE productId = ?`
+            
+            const value = [productId]
+            db.query(query, value, function(error, product){
+                if(error){
+                    callback(['databaseError'], null)
+                }else{
+                    callback(null, product[0])
+                }
+            })
+        },
+
+        
+        updateProductById: function(values, callback){
+            
+            const query = `UPDATE products 
+                            SET productName = ?, productDescription = ?, price = ?
+                            WHERE productId = ?`
+            const values1 = [values.productName, values.productDescription, values.productPrice,values.productId]
+
+            db.query(query, values1, function(error){
+                callback(error)
+            })
+        },
+
+        deleteProductByID: function(productId, callback){
+            const query = `DELETE FROM products WHERE productId = ?`
+
+            const value = [productId]
+            db.query(query, value, function(error){
+                callback(error)
+            })
         }
+
+
     }
 }

@@ -8,18 +8,19 @@
 <div class="container">
     {{#if isLoggedIn}}<!-- IF LOGGED IN -->
         <div class="selection box">
-            <form action="/accounts/deleteAccount" method="POST">
+            <form action="/accounts/deleteAccount" id="deleteAccountForm" method="POST">
                 <a href="/accounts/log-out" class="logOut button is-danger is-rounded" type="submit">Log out</a>
                 <button class="logOut button is-danger is-rounded" type="submit">delete account</button>
             </form>
             <br>
-
+            
             <!--  Update user info    -->
             {{#unless updateError}}
                 <div class="hidden">
             {{/unless}}
             <form action="/accounts/updateInformation" method="POST">
-                <p>Welcome {{fullName}}</p><br>
+                <p>Welcome {{fullName}}</p>
+                bgghgb<br>
                 
                 <div class="field">
                     Name: <br><br><p class="control has-icons-left has-icons-right">
@@ -226,6 +227,7 @@
     </div>
     {{/if}}
 </div>
+
 
 <script>
     document.addEventListener("DOMContentLoaded", function(){
