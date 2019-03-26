@@ -8,24 +8,20 @@
             </div><br>
         {{/if}}
         <div class="tile is-ancestor">
-           
             <!-- Create one for each product in database -->
             {{#each products}}
                 <div class="tile is-parent">
                     <article class="tile is-child box">
                         <p class="title">{{productName}}</p>
                         <p class="subtitle">{{productPrice}}</p>
-                        <a href="/products/productDetails" class="button is-primary is-rounded">View</a>
-                        {{#if isLoggedInAsAdmin}} <!-- only available to admin -->
-                            <a href="/products/updateItem" class="button is-primary is-rounded">Update</a>
-                            <a class="button is-primary is-rounded">Delete</a>
-                        {{/if}}
+                        <a href="/products/productDetails/{{productId}}" class="button is-primary is-rounded">View</a>
                         <figure class="image is-4by3">
                             <img src="/uploads/{{productImage}}">
                         </figure>
                     </article>
-                </div>
-            {{/each}}    
+                </div><br><br>
+            {{/each}}
+        </div>
     </div>
 </div>
 

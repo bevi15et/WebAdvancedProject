@@ -66,16 +66,16 @@ module.exports = function({accountRepository, accountValidator}){
                 callback(["not signed in!"], null)
                 return
             }
+
             accountRepository.getAccountInformationById(accountId, function(error, user){
                 const errors = []
                 if(error){
                     errors.push(error)
-                }else if(user == null){
+                }else if(user == null)
                     errors.push("no user found")
-                }else{
-                    callback(null, user)
-                }
+                callback(errors, user)
             })
+            
         },
         
 
