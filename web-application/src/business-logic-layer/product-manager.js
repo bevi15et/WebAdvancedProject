@@ -121,9 +121,17 @@ module.exports = function({productRepository, variousManager}){
                 errors.push("You are not authorized, not logged in!")
                 callback(errors)
             }
-        }
+        },
 
-        
+        getProductsById: function(productId, callback) {
+            const errors = []
+            productRepository.getProductsById(productId, function(error, products){
+                if(error){
+                    errors.push("Could not get product")
+                } 
+                callback(errors, products)
+            })
+        }
 
     }
 }

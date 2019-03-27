@@ -86,8 +86,15 @@ module.exports = function({db}){
             db.query(query, value, function(error){
                 callback(error)
             })
-        }
+        },
 
+        getProductsById: function(productId, callback){
+            const query = `SELECT * FROM products WHERE productId = ?`
+
+            db.query(query, [productId], function(error, product){
+                callback(error, product[0])
+            })
+        }
 
     }
 }

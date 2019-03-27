@@ -1,17 +1,21 @@
 
 <div class="container">
     <div class="section box">
-        <p>Items in your basket:</p><br>
-        <p>{{basket.orderStatus}}</p>
-        <ul>
-            {{#each basket.producId}} <!-- Show all products in basket -->
-                <li> 
-                    <p>Item: {{productName}}</p> 
-                    <p>price: {{productPrice}}</p>
-                    <a class="button is-primary is-rounded">Remove item</a>
-                </li>
-            {{/each}}
-        </ul>
-        <a class="button is-primary is-rounded">Empty basket</a>
+
+        {{#if errors}}
+                <p>{{errors}}</p>
+        {{else}}
+            <p>Items in your basket:</p><br>
+            <ul>
+                {{#each products}} <!-- Show all products in basket -->
+                    <li> 
+                        <p>Item: {{this.name}}</p> 
+                        <p>price: {{this.price}}</p>
+                        <a class="button is-primary is-rounded">Remove item</a>
+                    </li>
+                {{/each}}
+            </ul>
+            <a class="button is-primary is-rounded">Empty basket</a>
+        {{/if}}
     </div>
 </div>

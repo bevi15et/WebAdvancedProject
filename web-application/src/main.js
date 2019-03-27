@@ -53,11 +53,9 @@ container.register("variousRepository", awilix.asFunction(variousRepositoryFunc)
 
 container.register('db', awilix.asValue(db))
 
-/*
+container.register("orderRouter", awilix.asFunction(orderRouter))
 container.register("orderManager", awilix.asFunction(orderManagerFunc))
 container.register("orderRepository", awilix.asFunction(orderRepositoryFunc))
-*/
-
 
 const app = container.resolve("app")
 

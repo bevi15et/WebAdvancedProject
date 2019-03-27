@@ -21,7 +21,7 @@
                     </form>
                 {{else}}
                     {{#if isLoggedIn}}
-                        <a href="/orders/addProductToBasket" class="button is-primary is-rounded">Add to basket</a>
+                        <a href="/orders/addProductToBasket/{{product.productId}}" class="button is-primary is-rounded">Add to basket</a>
                     {{/if}}
                     <a href="/selection" class="button is-primary is-rounded">Continue shopping</a>
                 {{/if}}

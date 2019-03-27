@@ -5,7 +5,7 @@ const expressHandlebars = require('express-handlebars')
 const expressSession = require('express-session')
 const redisStore = require('connect-redis')(expressSession)
 
-module.exports = function({variousRouter,accountRouter,productRouter}){
+module.exports = function({variousRouter,accountRouter,productRouter, orderRouter}){
 
     const app = express()
 
@@ -39,7 +39,7 @@ module.exports = function({variousRouter,accountRouter,productRouter}){
     app.use('/', variousRouter)
     app.use('/accounts', accountRouter)
     app.use('/products', productRouter)
-    //app.use('/orders', orderRouter)
+    app.use('/orders', orderRouter)
     //app.use('/variousSPA',variousRouterSPA)
     //app.use('/productSPA',productRouterSPA)
 
