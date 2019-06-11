@@ -11,7 +11,7 @@ module.exports = function({orderManager, productManager}){
         }
 
         basket.push(productId)
-        res.send(basket)        
+        res.render('productDetails.hbs', {message: "Has been added to basket"})     
     })
 
     router.get('/Basket', function(req, res){
@@ -24,10 +24,9 @@ module.exports = function({orderManager, productManager}){
             for (let i = 0 ; i< basket.length; i++){
                 productManager.getProductsById(basket[i], function(error, product){
                     if(error.length > 0){
-                        errors.push("Cant load product")
+                        errors.push("Cant load basket")
                     } else {
-                        let name = product.productName
-                        products.push({price:product.price,name:name})
+                        products.push({price:product.price,name:product.productName})
                     }
                     if(i == basket.length - 1)
                         verifyStuff(errors,products)
@@ -36,7 +35,7 @@ module.exports = function({orderManager, productManager}){
             verifyStuff = function(errors,products){
                 console.log(products)
                 const model = {
-                    errors: errors,
+                    message: errors,
                     products: products
                 }
                 
@@ -49,6 +48,13 @@ module.exports = function({orderManager, productManager}){
         }
 
     })
+
+    router.get('/emptyBasket', function(req, res){
+        req.session.basket = []
+        res.render('/orders/basket')
+    })
+
+    router.get('/removeItemFromBasket', function(req, res){/*TODO*/})
 
     return router
 

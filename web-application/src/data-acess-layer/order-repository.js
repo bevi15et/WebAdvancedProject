@@ -10,6 +10,7 @@ module.exports = function({db}){
                     callback(error)
                     return
                 }
+                callback(null)
             })
         },
 
@@ -26,46 +27,27 @@ module.exports = function({db}){
         },
 
         insertProductInOrder: function(orderId, productId, callback){
-            const query = `INSERT INTO currentOrder (orderId, productId, orderStatus)`
-            const values = [orderId, productId, "Waiting for handeling"]
+            const insertionQuery = `INSERT INTO currentOrder (currentOrderId, productId, orderStatus) VALUES(?, ?, ?)`
+            const status = "In basket"
 
-
-            db.query(query, values, function(error){
-                if (error){
-                    console.log("repo failed to insert: ", error)                    
-                    
-                } else {
-                    callback(null)
+            db.query(insertionQuery, [orderId, productId, status], function(error){
+                if(error){
+                    callback("Server error")
+                    return
                 }
+                callback(null)
             })
         },
 
         deleteFromOrder: function(orderId, productId, callback){
-            const query = `DELETE FROM currentOrder 
-                           WHERE currentOrderId = ? 
-                           AND productId = ? 
-                           LIMIT 1`
-            const values = [orderId, productId]
+            const deletionQuery = `DELETE FROM currentOrder WHERE currentOrderId = ? AND productId = ? LIMIT 1`
 
-            db.query(query, values, function(error){
-                if (error){
-                    callback("Database failed to remove item from order")
-                } else {
-                    callback(null)
-                }   
-            })
-        },
-
-        deleteOrder: function(orderId, callback){
-            const query = `DELETE FROM currentOrder 
-                           WHERE currentOrderId = ?`
-
-            db.query(query, [orderid], function(error){
+            db.query(deletionQuery, [orderId, productId], function(error){
                 if(error){
-                    callback("Database could not drop order")
-                } else {
-                    callback(null)
+                    callback("Server error")
+                    return
                 }
+                callback(null)
             })
         },
 
@@ -112,6 +94,18 @@ module.exports = function({db}){
 
                 }
                 callback(orders)
+            })
+        },
+
+        changeOrderStatus: function(orderId, currentStatus, newStatus, callback){
+            const updateStatusQuery = `UPDATE currentOrder SET orderStatus = ? WHERE currentOrderId = ? AND orderStatus = ?`
+
+            db.query(updateStatusQuery, [newStatus, orderId, currentStatus], function(error){
+                if(error){
+                    callback('Server error')
+                    return
+                }
+                callback(null)
             })
         },
 

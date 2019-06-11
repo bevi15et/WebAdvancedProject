@@ -1,7 +1,7 @@
 const awilix = require('awilix')
 
 const myApp = require('../src/presentation-layer/app')
-
+const myApi = require('../src/API-presentation-layer/api-app')
 
 //accounts
 const accountRouter = require('./presentation-layer/routers/account-router')
@@ -29,14 +29,19 @@ const orderRepositoryFunc = require('./data-acess-layer/order-repository')
 //db
 const db = require('./data-acess-layer/db')
 
-
-
+//API
+const apiAccounrRouter = require('./API-presentation-layer/routers/api-account-router')
+const apiOrderRouter = require('./API-presentation-layer/routers/api-order-router')
 
 
 
 const container = awilix.createContainer()
 
 container.register('app', awilix.asFunction(myApp))
+container.register('myApi', awilix.asFunction(myApi))
+
+container.register('apiAccounrRouter', awilix.asFunction(apiAccounrRouter))
+container.register('apiOrderRouter', awilix.asFunction(apiOrderRouter))
 
 container.register('accountRouter', awilix.asFunction(accountRouter))
 container.register('accountManager', awilix.asFunction(accountManagerfunc))
@@ -57,9 +62,13 @@ container.register("orderRouter", awilix.asFunction(orderRouter))
 container.register("orderManager", awilix.asFunction(orderManagerFunc))
 container.register("orderRepository", awilix.asFunction(orderRepositoryFunc))
 
+const apiApp = container.resolve("myApi")
 const app = container.resolve("app")
 
 app.listen(8080, function(){
     console.log("Web app listening on port 8080")
+})
+apiApp.listen(8081, function(){
+    console.log("Web API listening on port 8081")
 })
 

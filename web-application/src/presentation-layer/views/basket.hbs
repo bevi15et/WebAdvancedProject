@@ -2,20 +2,20 @@
 <div class="container">
     <div class="section box">
 
-        {{#if errors}}
-                <p>{{errors}}</p>
+        {{#if message}}
+                <p>{{message}}</p>
         {{else}}
             <p>Items in your basket:</p><br>
             <ul>
                 {{#each products}} <!-- Show all products in basket -->
                     <li> 
-                        <p>Item: {{this.name}}</p> 
-                        <p>price: {{this.price}}</p>
-                        <a class="button is-primary is-rounded">Remove item</a>
+                        <p>Item: {{this.name}}, price: {{this.price}} 
+                            <a href="/orders/removeItemFromBasket">Remove item</a>
+                        </p>
                     </li>
                 {{/each}}
             </ul>
-            <a class="button is-primary is-rounded">Empty basket</a>
+            <a href="/orders/emptyBasket" class="button is-primary is-rounded">Empty basket</a>
         {{/if}}
     </div>
 </div>

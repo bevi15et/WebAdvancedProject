@@ -4,7 +4,9 @@ services:
     build: "./web-application/"
     ports:
       - "8080:8080"
-      - "9229:9229"
+      - "8081:8081"
+    environment:
+      - JWT_KEY=jsonWebTokenKey
     volumes:
       - "./web-application/src:/web-application/src"
     depends_on:

@@ -1,86 +1,48 @@
 module.exports = function({orderRepository}){
     return{
 
-        addProductToBasket: function(productId, accountId, callback){
-             
-            if(accountId){
-                orderRepository.getOrderId(function(orderId, error){
-                    if(error){
-                        callback(null, error)
-                    } else {
-                        orderRepository.insertProductInOrder(orderId, productId, function(error){
-                            if(error){
-                                callback(error)
-                            } else {
-                                callback(null)
-                            }
-                        })
-                        console.log("login: ", accountId, ", orderId: ", orderId, ", productId: ", productId)            
-           
-                    }
-                })
-            } else {                
-                errors.push("User not logged in")
-                callback(null, error)
+        //Basket
+        addProductToBasket: function(productId, accountId, api, callback){
+            const isLoggedIn
+            const accountId
+
+            if(api && account != null){      
+                accountId = account.accountId
+                
+
+
+            } else {
+                isLoggedIn = req.session.isLoggedIn
+                accountId = req.session.accountId
+                
+                if(isLoggedIn){  /*TODO*/  }
             }
         },
     
+        removeProductFromBasket: function(basket, item, callback){/*TODO*/},
 
-        removeProductFromBasket: function(productId, callback){
-            const isLoggedIn = req.session.isLoggedIn
-            const orderId = req.session.orderId
+        showBasket: function(isLoggedIn, basket, callback){/*TODO*/},
 
-            if(isLoggedIn) {
-                orderRepository.deleteFromOrder(orderId, productId, function(error){
-                    if(error){
-                        callback("Failed to remove item from basket")
-                    } else {
-                        callback(null)
-                    }
-                })
-            } else {
-                callback("User not logged in")
+        //Orders
+        placeOrder: function(account, api, basket, callback){
+            if(api){
+                /**TODO */
+            }else{
+                /**TODO */
             }
         },
 
-        showBasket: function(isLoggedIn, orderId, callback){
+        showHistory: function(account, api, callback){
+            const isLoggedIn
+            const accountId
 
-            if(isLoggedIn){
-                orderRepository.getCurrentOrder(orderId, function(currentOrder, error){
-                    if(error){
-                        console.log("manager error: ", error)
-                        callback(null, "Failed to load basket")
-                    } else {
-                        console.log("manager: ", currentOrder)
-                        callback(currentOrder, null)
-                    }
-                })
+            if(api && account != null){      
+                isLoggedIn = true
+                accountId = account.accountId
             } else {
-                callback("User not logged in")
+                isLoggedIn = req.session.isLoggedIn
+                accountId = req.session.accountId
             }
-        },
-
-        emptyBasket: function(){
-            const isLoggedIn = req.session.isLoggedIn
-            const orderId = req.session.orderId
-
-            if(isLoggedIn){
-                orderRepository.deleteOrder(orderId, function(error){
-                    if(error){
-                        callback("Failed to drop order")
-                    } else {
-                        callback(null)
-                    }
-                })
-            } else {
-                callback("User not logged in")
-            }
-        },
-
-        showHistory: function(callback){
-            const isLoggedIn = req.session.isLoggedIn
-            const accountId = req.session.accountId
-
             if(isLoggedIn){
                 orderRepository.getOrderHistory(accountId, function(orders, error){
                     if(error){
@@ -96,9 +58,8 @@ module.exports = function({orderRepository}){
             
         },
 
-        updateOrderStatus: function(orderId, status, callback){
-//todo            
-        },
+        updateOrderStatus: function(orderId, api, status, callback){/*todo*/},
     
+        removeOrder: function(orderId, api, callback){ /**todo */}
     }
 }
