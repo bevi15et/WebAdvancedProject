@@ -119,12 +119,10 @@ module.exports = function({accountManager}){
     // Delete account (D)
     router.delete('/', function(req, res){
         const headerAuth = req.headers.authorization
-        var token = null
-        var decoded = null
 
         if(headerAuth){
-            token = headerAuth.split(" ")[1]
-            decoded = jwt.verify(token, process.env.JWT_KEY)
+            const token = headerAuth.split(" ")[1]
+            const decoded = jwt.verify(token, process.env.JWT_KEY)
 
             accountManager.deleteAccountById(decoded.account, function(errors){
                if(errors > 0){
@@ -151,17 +149,28 @@ module.exports = function({accountManager}){
         const email = req.body.email
         const password = req.body.password
 
-        accountManager.signIn(email, password, function(errors, account){
-            if(errors.length < 1){
+        accountManager.signIn(email, password, function(errors, accountInfo){
+            console.log(accountInfo)
+
+            if(!errors){               
+                const account = []
+                account.push(
+                    "accountId: " + accountInfo.accountId,
+                    "fullName: " + accountInfo.fullName,
+                    "admin: " + accountInfo.admin
+                    )
+
                 const token = jwt.sign({
-                    account: account    
-                }, 
-                process.env.JWT_KEY,
-                {
-                    expiresIn: '1h'
-                })
+                    account: account,
+                    currentOrderId: null,
+                    basket: []    
+                    }, 
+                    process.env.JWT_KEY,
+                    {
+                        expiresIn: '1h'
+                    })
                 res.status(200).json({
-                    message: "Logged in as: " + account.fullName,
+                    message: "Logged in as: " + accountInfo.fullName,
                     token: token
                 })
             }else{

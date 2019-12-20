@@ -8,20 +8,13 @@
 <div class="container">
     {{#if isLoggedIn}}<!-- IF LOGGED IN -->
         <div class="selection box">
-            <form action="/accounts/deleteAccount" id="deleteAccountForm" method="POST">
-                <a href="/accounts/log-out" class="logOut button is-danger is-rounded" type="submit">Log out</a>
-                <button class="logOut button is-danger is-rounded" type="submit">delete account</button>
-            </form>
-            <br>
+            <p>Welcome {{fullName}}</p><br>
             
             <!--  Update user info    -->
-            {{#unless updateError}}
+   <!--         {{#unless updateError}}
                 <div class="hidden">
-            {{/unless}}
+            {{/unless}}-->
             <form action="/accounts/updateInformation" method="POST">
-                <p>Welcome {{fullName}}</p>
-                bgghgb<br>
-                
                 <div class="field">
                     Name: <br><br><p class="control has-icons-left has-icons-right">
                         <input class="input" type="text" value="{{fullName}}" name="fullName">
@@ -55,25 +48,17 @@
                     </p>
                 </div>
                 <br>
-                <br>
                 {{#each ./updateError}}
                     <p class="errorClass">{{this}}</p>
                 {{/each}}
-                <br>
                 <input class="button is-info" type="submit" value="update information">
-            </form><br><br>
-            {{#unless updateError}}
-                </div>
-            {{/unless}}
-
-
+                <br><br><br>
             <!--  change user password    -->
-            {{#unless ./changePasswordError}}
+         <!--   {{#unless ./changePasswordError}}
                 <div class="hidden">
-            {{/unless}}
+            {{/unless}}-->
 
             <form action="/accounts/changePassword" method="POST">
-
                 <div class="field">
                     New Password: <br><br><p class="control has-icons-left has-icons-right">
                         <input class="input" type="password" name="newPassword">
@@ -90,8 +75,6 @@
                         </span>
                     </p>
                 </div>
-                <br>
-                <br>
                 {{#each ./changePasswordError}}
                     <p class="errorClass">{{this}}</p>
                 {{/each}}
@@ -117,6 +100,20 @@
                     {{/each}}
                 </ul>
             </div>
+            <div class="field">
+                <form action="/accounts/deleteAccount" id="deleteAccountForm" method="POST">
+                    <a href="/accounts/log-out" class="logOut button is-danger is-rounded" type="submit">Log out</a>
+                    <button class="logOut button is-danger is-rounded" type="submit">delete account</button>
+                </form>
+            </div>
+            <br>
+
+            </form><br><br>
+            {{#unless updateError}}
+                </div>
+            {{/unless}}
+
+
         </div>
     
     {{else}} 

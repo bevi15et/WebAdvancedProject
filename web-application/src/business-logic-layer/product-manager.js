@@ -60,15 +60,18 @@ module.exports = function({productRepository, variousManager}){
             }
         },
 
-        
         updateProductById: function(account, productName, productDescription, productPrice, productId, callback){
             const errors = []
+
             if(productName.length == 0){
                 errors.push("Title is missing!")
+            
             }else if(productDescription.length == 0){
                 errors.push("Description is missing!")
+            
             }else if(productPrice.length == 0){
                 errors.push("Price is missing")
+            
             }
 
             if(account){
@@ -79,14 +82,17 @@ module.exports = function({productRepository, variousManager}){
                             productDescription: productDescription,
                             productPrice: productPrice,
                             productId: productId
+            
                         }
                         productRepository.updateProductById(product, function(error){
                             if(error){
                                 callback(error)
+            
                             }
                         })
                     }else{
                         errors.push("You are not authorized")
+            
                     }
                 })
             }
@@ -123,13 +129,28 @@ module.exports = function({productRepository, variousManager}){
             }
         },
 
-        getProductsById: function(productId, callback) {
-            const errors = []
-            productRepository.getProductsById(productId, function(error, products){
+        getProductById: function(productId, callback) {
+            productRepository.getProductById(productId, function(error, product){
+                if(error) {
+                    console.log(error);
+                    callback("Could not get item", null)
+                
+                } else {
+                    callback(null, product)
+
+                }
+            })
+        },
+
+        getProductsById: function(products, callback) {
+            productRepository.getProductsById(products, function(error, products){
                 if(error){
-                    errors.push("Could not get product")
-                } 
-                callback(errors, products)
+                    callback(error, null)
+                }else{
+                    console.log("these are the products: " + products[1]);
+                    
+                    callback(null, products)
+                }            
             })
         }
 

@@ -40,13 +40,28 @@ module.exports = function({variousManager}){
     })
 
     router.get('/Basket', function(req, res){
-        res.render("basket.hbs")
+        const basket = req.session.basket
+        res.render("basket.hbs", {products: basket})
     })
 
 
 
     router.get('/addProduct', function(req, res) {
-        res.render("addProduct.hbs")
+        const account = req.session.loggedInAccount
+
+        variousManager.adminCheck(account, function(error, admin){
+            if(error){
+                console.log(error);
+                res.render("profile.hbs", {message: error})
+            
+            } else if(admin) {
+                res.render("addProduct.hbs")
+    
+            } else {
+                res.render("profile.hbs", {message: "Not authorized"})
+            }       
+        })
+
     })
 
     return router

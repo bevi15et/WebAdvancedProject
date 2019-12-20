@@ -36,18 +36,17 @@ module.exports = function({productManager, productRepository, variousManager}){
 
     })
 
-
-
-
     router.get('/updateProduct', function(req, res){
         const account = req.session.loggedInAccount
         const productId = req.query.productId
 
         productManager.getProductInformationById(account, productId ,function(error, product){
-            if(error.length > 0){
+            if(error){
                 res.render("updateProduct.hbs", {error: error})
+    
             }else{
                 res.render("updateProduct.hbs", {product: product,id:productId})
+    
             }
         })
     })
@@ -71,7 +70,19 @@ module.exports = function({productManager, productRepository, variousManager}){
     })
 
     router.get('/addProduct', function(req, res){
-        res.render("addProduct.hbs")
+        const account = req.session.loggedInAccount
+        variousManager.adminCheck(account, function(error, admin){
+            if(error){
+                console.log(error);
+                
+            } else if(admin) {
+                res.render("addProduct.hbs")
+
+            } else {
+                res.redirect('/profile')
+
+            }
+        })
     })
 
     router.post('/addProduct', upload ,function(req, res){
@@ -109,7 +120,7 @@ module.exports = function({productManager, productRepository, variousManager}){
                 res.render("productDetails.hbs", {error: errors})
             }else if(admin){
                 productRepository.getProductById(productId, function(error, product){
-                    if(error.length > 0){
+                    if(error){
                         res.render("productDetails.hbs", {error: error})
                     }else{
                         const model = {
@@ -121,7 +132,7 @@ module.exports = function({productManager, productRepository, variousManager}){
                 })
             }else if(user){
                 productRepository.getProductById(productId, function(error, product){
-                    if(error.length > 0){
+                    if(error){
                         res.render("productDetails.hbs", {error: error})
                     }else{
                         const model = {
@@ -134,7 +145,7 @@ module.exports = function({productManager, productRepository, variousManager}){
                 })
             }else{
                 productRepository.getProductById(productId, function(error, product){
-                    if(error.length > 0){
+                    if(error){
                         res.render("productDetails.hbs", {error: error})
                     }else{
                         const model = {

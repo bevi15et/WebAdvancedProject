@@ -1,7 +1,6 @@
 
 <div class="container">
     <div class="section box">
-
         {{#if message}}
                 <p>{{message}}</p>
         {{else}}
@@ -10,12 +9,13 @@
                 {{#each products}} <!-- Show all products in basket -->
                     <li> 
                         <p>Item: {{this.name}}, price: {{this.price}} 
-                            <a href="/orders/removeItemFromBasket">Remove item</a>
+                            <a href="/orders/removeItemFromBasket:{{this.name}}">Remove item</a>
                         </p>
                     </li>
                 {{/each}}
             </ul>
             <a href="/orders/emptyBasket" class="button is-primary is-rounded">Empty basket</a>
+            <a href="/orders/placeOrder" class="button is-primary is-rounded">Place order</a>
         {{/if}}
     </div>
 </div>

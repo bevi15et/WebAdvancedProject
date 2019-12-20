@@ -5,7 +5,9 @@ module.exports = function(){
 
         getErrorNewAccount: function(email, fullName, password, repeatPassword, adress, postalCode, callback){
             const errors = []
-        
+            console.log("inside account validator");
+            
+
             if(!email.includes("@")){
                 errors.push("Email is not valid")
             }else if(fullName.length == 0){
@@ -19,7 +21,13 @@ module.exports = function(){
             }else if(postalCode.length == 0){
                 errors.push("Postal code missing")
             }
-            callback(errors)
+            if(errors.length > 0){
+                console.log("error in validation: ", errors);
+                callback(errors)
+            } else {
+                console.log("no errors");                
+                callback(null)
+            }
         },
 
         getErrorUpdateAccount: function(email, fullName, adress, postalCode, callback){
