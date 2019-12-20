@@ -28,6 +28,6 @@ CREATE TABLE IF NOT EXISTS currentOrder(
 	currentOrderId INTEGER NOT NULL,
 	productId INTEGER NOT NULL,
     orderStatus VARCHAR (100),
-	CONSTRAINT FOREIGN KEY(currentOrderId) REFERENCES orders(orderId),
+	CONSTRAINT FOREIGN KEY(currentOrderId) REFERENCES orders(orderId) ON DELETE CASCADE,
 	FOREIGN KEY(productId) REFERENCES products(productId)
 )

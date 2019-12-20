@@ -10,8 +10,10 @@ module.exports = function({db}){
             db.query(query, value, function(error, admin){
                 if(admin){
                     callback(error, admin[0])
-                }else{
+
+                } else {
                     callback(error, null)
+                
                 }
             })
         },
@@ -23,8 +25,10 @@ module.exports = function({db}){
             db.query(query, function(error, products){
                 if(error){
                     callback(error, null)
-                }else{
+
+                } else {
                     callback(error, products)
+                
                 }
             })
         }

@@ -24,9 +24,9 @@ module.exports = function({db}){
 
             db.query(query, values, function(error, product){
                 if(error){
-                    callback(['databaseError'], null)
+                    callback('databaseError', null)
                 }else{
-                    callback([], product[0])
+                    callback(null, product[0])
                 }
             })
         },
@@ -41,7 +41,6 @@ module.exports = function({db}){
             })
         },
 
-        
         getLatestProductId: function(callback){
             const query = `SELECT LAST_INSERT_ID() AS id`
 
@@ -49,7 +48,6 @@ module.exports = function({db}){
                 callback(error, id[0])
             })
         },
-
         
         getProductInformationById: function(productId, callback){
             const query = `SELECT productName, productDescription, price 
@@ -66,7 +64,6 @@ module.exports = function({db}){
             })
         },
 
-        
         updateProductById: function(values, callback){
             
             const query = `UPDATE products 
@@ -87,12 +84,22 @@ module.exports = function({db}){
                 callback(error)
             })
         },
-
+        
         getProductsById: function(productId, callback){
-            const query = `SELECT * FROM products WHERE productId = ?`
+            var query = `SELECT * FROM products WHERE productId = ?`
 
-            db.query(query, [productId], function(error, product){
-                callback(error, product[0])
+            if(productId != null && productId.length > 1){
+                for(product in productId-1){
+                    query = query + ` OR productId = ?`
+                }
+            }
+
+            db.query(query, productId, function(error, product){
+                if(error){
+                    callback("Someting whent wrong", null)
+                }else{
+                    callback(null, product)
+                }
             })
         }
 

@@ -3,14 +3,17 @@
 module.exports = function({db}){
     return {
 
-
         createAccount: function(account, callback){
 
             const query = `INSERT INTO accounts (fullName, email, adress, postalCode, password) VALUES (?, ?, ?, ?, ?)` 
             const values = [account.fullName, account.email, account.adress, account.postalCode, account.password]
 
             db.query(query, values, function(error){
-                callback(error)
+                if (error){
+                    callback(null, error)
+                }
+                console.log("account created");
+                callback("Account created", null)
             })
         },
 
@@ -24,7 +27,7 @@ module.exports = function({db}){
                 if(error){
                     callback(error, null)
                 }else {
-                    callback(error, account[0])
+                    callback(null, account[0])
                 }
             })
         },
@@ -72,13 +75,7 @@ module.exports = function({db}){
             db.query(query, value, function(error){
                 callback(error)
             })
-        },
-
-
-
-
-
-
+        }
 
     }
 }

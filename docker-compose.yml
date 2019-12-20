@@ -11,14 +11,28 @@ services:
       - "./web-application/src:/web-application/src"
     depends_on:
       - database
+      - ormdatabase
   database:
     build: ./database
     ports:
       - "3306:3306"
     environment:
-      - MYSQL_ROOT_PASSWORD=theRootPassword
+      - MYSQL_ROOT_PASSWORD=qwer
       - MYSQL_DATABASE=webAppDatabase
+    container_name: MySQLDB
   redis:
     build: ./redis
     ports:
       - "6379:6379"
+  ormdatabase:
+    build: ./ORMdatabase
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=qwer
+      - POSTGRES_DB=webAppDatabase
+    container_name: postgresDB
+    depends_on:
+      - database
+    

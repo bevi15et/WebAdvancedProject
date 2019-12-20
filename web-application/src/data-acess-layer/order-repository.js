@@ -2,22 +2,27 @@ module.exports = function({db}){
     return {
         
         createNewOrder: function(accountId, callback){
-            const query = `INSERT INTO orders (accountId) (?)`
-           
+            console.log("inside repository");
+            
+            const query = `INSERT INTO orders (accountId) VALUES(?)`
+            
             db.query(query, [accountId], function(error){
                 if(error){
-
                     callback(error)
                     return
+                }else{
+                    callback(null)
+                    return
                 }
-                callback(null)
             })
         },
 
         getOrderId: function(accountId, callback){
+            console.log("get order id repository");
+            
             const idQuery = `SELECT orderId FROM orders WHERE accountId = (?) ORDER BY orderId DESC LIMIT 1`
 
-            db.query(idQuery, [accountId], function(orderId, error){
+            db.query(idQuery, [accountId], function(error, orderId){
                 if(error){
                     callback(null, error)
                 } else {
@@ -26,17 +31,18 @@ module.exports = function({db}){
             })
         },
 
-        insertProductInOrder: function(orderId, productId, callback){
+        insertProductInOrder: function(orderId, productId, status, callback){
             const insertionQuery = `INSERT INTO currentOrder (currentOrderId, productId, orderStatus) VALUES(?, ?, ?)`
-            const status = "In basket"
 
             db.query(insertionQuery, [orderId, productId, status], function(error){
                 if(error){
                     callback("Server error")
-                    return
+                    
+                } else {
+                    callback(null)
+
                 }
-                callback(null)
-            })
+            })             
         },
 
         deleteFromOrder: function(orderId, productId, callback){
@@ -52,7 +58,7 @@ module.exports = function({db}){
         },
 
         getCurrentOrder: function(orderId, callback){
-            const query = `SELECT * FROM currentOrder WHERE currentOrderId = (?)`
+            const query = `SELECT productId FROM currentOrder WHERE currentOrderId = (?)`
             console.log("getCurrentOrder with id: ", orderId)
 
             db.query(query, [orderId], function(currentOrder, error){
@@ -66,6 +72,18 @@ module.exports = function({db}){
             })
         },
         
+        getOrderStatus: function(orderId, callback){
+            const statusQuery = `SELECT orderStatus FROM currentOrder WHERE currentOrderId = ? LIMIT 1;`
+
+            db.query(statusQuery, [orderId], function(status, error){
+                if(error){
+                    callback(null, error)
+                } else {
+                    callback(status, null)
+                }
+            })    
+        },
+
         getOrderHistory: function(accountId, callback){
             const orderQuery = `SELECT * FROM orders WHERE accountId = ?`
             const basketQuery = `SELECT productId, orderStatus, orderId 
@@ -109,12 +127,51 @@ module.exports = function({db}){
             })
         },
 
-        getLatestProductId: function(callback){
-            const query = `SELECT LAST_INSERT_ID() AS id`
-            db.query(query, function(error, id){
-                callback(error, id[0])
+        getLastSavedOrderId: function(accountId, callback){
+            const lastOrderQuery = `SELECT * FROM orders, currentOrder 
+                                    WHERE accountId = 2 
+                                    AND orderId = currentOrderId 
+                                    AND orderStatus = "Basket saved on log-out" 
+                                    ORDER BY orderId DESC 
+                                    LIMIT 1`
+
+            db.query(lastOrderQuery, [accountId], function(error, id){
+                if(error){
+                    console.log(error);
+                    callback("Error finding latest saved order", null)
+                    
+                } 
+                console.log("help!!!!!!!!!!!!!!");    
+                callback(null, id[0].orderId)
+            
             })
-        }
+        }, 
+
+        getSpecificOrder: function(orderId, callback){
+            const orderQuery = `SELECT productId FROM currentOrder WHERE currentOrderId = ?`
+
+            db.query(orderQuery, [orderId], function(productIds, error){
+                if(error){
+                    callback(null, 'Server error')
+
+                }
+                callback(productIds, null)
+            })
+        },
+
+        deleteOrder:function(orderId, callback){
+            const deleteQuery = `DELETE FROM orders WHERE orderId = ?`
+
+            db.query(deleteQuery, [orderId], function(error){
+                if(error){
+                    console.log(error);
+                    callback("Database error")
+                } else {
+                    callback(null)
+                }
+
+            })
+        },
 
     }
 }
