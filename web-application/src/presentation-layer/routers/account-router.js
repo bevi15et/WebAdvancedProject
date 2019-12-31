@@ -11,15 +11,25 @@ module.exports = function({accountManager, orderManager}){
         const package = [account, orderId]
 
         if(basket && basket.length > 0){
-            orderManager.saveBasket(package, null, basket, function(error){
-                if(error) {
-                    console.log(error);
-
-                } else {
-                    console.log("router order save...");
-
-                }
-            })
+            for(let i = 0; i < basket.length; i++){
+                orderManager.saveBasket(package, null, basket[i], function(error){
+                    if(error) {
+                        console.log(error);
+    
+                    } else if(i = basket.length -1) {
+                        verifyBasketSaved("basket has been saved")
+                        
+                    } else {
+                        console.log("router order save...");
+    
+                    }
+                })
+            }
+            verifyBasketSaved = function(message){
+                console.log(message);
+                
+            }            
+            
         } else if (!orderPlaced) {
             orderManager.removeOrder(orderId, null, function(error){
                 if(error){
@@ -172,32 +182,34 @@ module.exports = function({accountManager, orderManager}){
         accountManager.signIn(email, password, function(error, account){
             if(error){
                 console.log(error);
-                errors.push(error)
+                errors.push("Error signing in")
                 
             } else if(account){
-        /*      console.log("inside if account");
+                req.session.loggedInAccount = account
+                req.session.isLoggedIn = true
                 
                 orderManager.getLastSavedOrder(null, account, function(error, orderId){
                     console.log("called manager: getLastSavedOrder");
                     
                     if(error){
-                        console.log(error);
-                        errors.push(error)
+                        console.log("error from ordermanager: " + error);
+                        errors.push("could not get last saved order basket")
+                        res.redirect('/Selection')
                         
                     } else if (orderId) {
+                        /* (future update) Allow the customer to load items from last session  */
+                        
                         req.session.orderId = orderId
+                        res.redirect('/Basket')
 
                     } else {
                         console.log("No saved baskets");
+                        res.redirect('/Selection')
+                   
+                    }  
+                })
 
-                    }
-                })*/
-
-                req.session.loggedInAccount = account
-                req.session.isLoggedIn = true
-                res.redirect('/Selection')
-
-            }else{
+            } else {
                 res.render('profile.hbs', {errors: errors})
             
             }

@@ -173,6 +173,15 @@ module.exports = function({orderManager, productManager}){
         }
     })
 
+    //See old order
+    //TODO
+
+    //Change order status
+    //TODO
+
+    //Delete order
+    //TODO
+
     return router
 
 }

@@ -116,6 +116,14 @@ module.exports = function({db}){
         },
 
         changeOrderStatus: function(orderId, currentStatus, newStatus, callback){
+            /** different order statuses:
+              Shipped
+              Basket saved on log-out
+              Order placed, waiting for handeling
+              Order being handeled
+              Cancelled
+             */
+
             const updateStatusQuery = `UPDATE currentOrder SET orderStatus = ? WHERE currentOrderId = ? AND orderStatus = ?`
 
             db.query(updateStatusQuery, [newStatus, orderId, currentStatus], function(error){
@@ -129,7 +137,7 @@ module.exports = function({db}){
 
         getLastSavedOrderId: function(accountId, callback){
             const lastOrderQuery = `SELECT * FROM orders, currentOrder 
-                                    WHERE accountId = 2 
+                                    WHERE accountId = ? 
                                     AND orderId = currentOrderId 
                                     AND orderStatus = "Basket saved on log-out" 
                                     ORDER BY orderId DESC 
@@ -140,10 +148,14 @@ module.exports = function({db}){
                     console.log(error);
                     callback("Error finding latest saved order", null)
                     
-                } 
-                console.log("help!!!!!!!!!!!!!!");    
-                callback(null, id[0].orderId)
+                } else if(id[0]){
+                    callback(null, id[0].orderId)
             
+                } else {
+                    callback(null, null)
+
+                }   
+
             })
         }, 
 
@@ -156,6 +168,7 @@ module.exports = function({db}){
 
                 }
                 callback(productIds, null)
+
             })
         },
 
@@ -166,10 +179,11 @@ module.exports = function({db}){
                 if(error){
                     console.log(error);
                     callback("Database error")
+
                 } else {
                     callback(null)
+                
                 }
-
             })
         },
 

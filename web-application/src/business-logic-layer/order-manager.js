@@ -105,7 +105,6 @@ module.exports = function({orderRepository}){
                 
             }
 
-            orderRepository.getLastSavedOrderId()
         },
 
         createNewOrder: function(api, account, callback){
@@ -266,7 +265,6 @@ module.exports = function({orderRepository}){
                         callback("Error from databse")
                         
                     } else {
-                        console.log("order saved for next time");
                         callback(null)
                     }
                 })
@@ -277,7 +275,29 @@ module.exports = function({orderRepository}){
             }
         },
 
-        updateOrderStatus: function(orderId, api, status, callback){/*todo*/},
+        updateOrderStatus: function(account, api, oldStatus, newStatus, callback){
+            if(api){
+                //TODO
+            
+            } else if(account[0]){
+                
+                orderRepository.changeOrderStatus(account[1], oldStatus, newStatus, function(error){
+                    if(error){
+                        console.log(error);
+                        callback("failed to change status")
+
+                    } else {
+                        console.log("Status changed from:" + oldStatus + " to: " + newStatus + ".")
+                        callback(null)
+                    
+                    }  
+                })
+
+            } else {
+                console.log("Else in update orderstatus")
+                
+            }
+        },
     
         removeOrder: function(orderId, api, callback){
             if(api){

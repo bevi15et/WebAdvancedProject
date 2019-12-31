@@ -249,6 +249,9 @@ module.exports = function({orderManager, productManager}){
         }
     }),
 
+    //Change order status
+        //TODO
+
     //Remove items from order
     router.delete('/:productId', (req, res) => {
         const headerAuth = req.headers.authorization
