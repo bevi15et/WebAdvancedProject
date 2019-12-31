@@ -1,0 +1,15 @@
+INSERT INTO accounts (fullName, email, adress, postalCode, password, orderHistory, admin) VALUES("Noname Lastname", "admin@shop.com", "None", 12345, "$2a$10$NwAYjxK4PKptUROWNyWLK.6qD6j6EkdhSPXqYIA1SlgiFMoy3DfSa", 0, "Yes");
+INSERT INTO accounts (fullName, email, adress, postalCode, password, orderHistory) VALUES("Noname Lastname", "user@shop.com", "None", 12345, "$2a$10$NwAYjxK4PKptUROWNyWLK.6qD6j6EkdhSPXqYIA1SlgiFMoy3DfSa", 0);
+INSERT INTO accounts (fullName, email, adress, postalCode, password, orderHistory) VALUES("Someame LastnameTwo", "user2@shop.com", "None", 12345, "$2a$10$NwAYjxK4PKptUROWNyWLK.6qD6j6EkdhSPXqYIA1SlgiFMoy3DfSa", 0);
+INSERT INTO products (price, productName, productDescription) VALUES(10, "PRODUKT 1", "Här kommer en ganska kort beskrivning...");
+INSERT INTO products (price, productName, productDescription) VALUES(15, "PRODUKT 2", "Här kommer en ganska kort beskrivning...");
+INSERT INTO products (price, productName, productDescription) VALUES(200, "PRODUKT 3", "Här kommer en ganska kort beskrivning...");
+INSERT INTO orders (accountId) VALUES(2);
+INSERT INTO orders (accountId) VALUES(3);
+INSERT INTO orders (accountId) VALUES(2);
+INSERT INTO currentOrder (currentOrderId, productId, orderStatus) VALUES(1, 2, "Waiting for handeling");
+INSERT INTO currentOrder (currentOrderId, productId, orderStatus) VALUES(1, 3, "Waiting for handeling");
+INSERT INTO currentOrder (currentOrderId, productId, orderStatus) VALUES(2, 1, "Handeling");
+INSERT INTO currentOrder (currentOrderId, productId, orderStatus) VALUES(2, 3, "Handeling");
+INSERT INTO currentOrder (currentOrderId, productId, orderStatus) VALUES(3, 1, "Shipped");
+INSERT INTO currentOrder (currentOrderId, productId, orderStatus) VALUES(3, 1, "Shipped");
